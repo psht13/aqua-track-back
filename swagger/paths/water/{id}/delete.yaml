@@ -1,0 +1,30 @@
+tags:
+  - Water
+summary: Delete water record by ID
+operationId: deleteWaterRecord
+description: 'Delete a water record by its unique ID'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: 67422422135f1e6a56bf23fe
+      description: The unique ID of the water record
+responses:
+  '204':
+    description: 'Successfully deleted the water record'
+    content:
+      application/json:
+        schema:
+          type: object
+          example: {}
+  '401':
+    $ref: ../../../components/responses/401.yaml
+  '404':
+    description: 'Water record not found'
+    $ref: ../../../components/responses/404.yaml
+  '500':
+    $ref: ../../../components/responses/500.yaml

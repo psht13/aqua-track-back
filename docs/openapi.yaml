@@ -12,7 +12,20 @@ tags:
 servers:
   - url: http://127.0.0.1:8081
 paths:
-
+  /waters/{id}:
+    patch:
+      $ref: ../swagger/paths/water/{id}/patch.yaml
+    delete:
+      $ref: ../swagger/paths/water/{id}/delete.yaml
+  /waters:
+    post:
+      $ref: ../swagger/paths/water/post.yaml
+  /waters/byDay:
+    get:
+      $ref: ../swagger/paths/water/by-day/get.yaml
+  /waters/byMonth:
+    get:
+      $ref: ../swagger/paths/water/by-month/get.yaml
 components:
   securitySchemes:
     bearerAuth:

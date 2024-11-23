@@ -1,0 +1,39 @@
+type: object
+required:
+  - _id
+  - amount
+  - userId
+  - curDailyDose
+  - date
+properties:
+  _id:
+    description: "Water entry's id"
+    type: string
+    example: '67422422135f1e6a56bf23fe'
+  amount:
+    description: 'Amount of water consumed (in milliliters)'
+    type: number
+    example: 500
+  userId:
+    description: "Id of user that's logged water consumption"
+    type: string
+    example: '672e559aefd1ec206c1b77a8'
+  curDailyDose:
+    description: 'Current daily water consumption goal (in milliliters)'
+    type: number
+    example: 2000
+  date:
+    description: 'Date of water consumption entry'
+    type: string
+    format: date-time
+    example: '2024-11-23T12:34:56Z'
+  createdAt:
+    description: 'Timestamp when the entry was created'
+    type: string
+    format: date-time
+    example: '2024-11-23T12:34:56Z'
+  updatedAt:
+    description: 'Timestamp when the entry was last updated'
+    type: string
+    format: date-time
+    example: '2024-11-23T12:34:56Z'

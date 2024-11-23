@@ -1,0 +1,61 @@
+tags:
+  - Water
+summary: Update a water record
+operationId: updateWaterRecord
+description: 'Update an existing water record using JSON or multipart form data.'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    description: The ID of the water record to update
+    schema:
+      type: string
+      example: 67422422135f1e6a56bf23fe
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          amount:
+            type: number
+            format: integer
+            example: 150
+            description: 'The amount of water consumed in liters'
+          date:
+            type: string
+            format: date
+            example: '2024-11-23T19:00:00'
+            description: 'The date of water consumption'
+responses:
+  '200':
+    description: 'Water consumption record updated successfully'
+    content:
+      application/json:
+        schema:
+          $ref: ../../../components/schemas/water.yaml
+  '400':
+    description: 'Invalid request format'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: '"amount" must be a positive number'
+  '401':
+    $ref: ../../../components/responses/401.yaml
+  '404':
+    description: 'Water consumption record not found'
+    $ref: ../../../components/responses/404.yaml
+  '500':
+    $ref: ../../../components/responses/500.yaml
