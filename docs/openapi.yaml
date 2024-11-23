@@ -11,7 +11,7 @@ tags:
     description: Operations with contacts
 servers:
   - url: http://127.0.0.1:8081
-  - url: https://contacts-book.up.railway.app
+paths:
 
 components:
   securitySchemes:
