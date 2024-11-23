@@ -1,0 +1,19 @@
+description: 'Validation error'
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - message
+        - data
+      properties:
+        status:
+          type: integer
+          example: 400
+        message:
+          type: string
+          example: 'Http Error'
+        data:
+          type: object
+          example: { error: 'Request body validation error' }
