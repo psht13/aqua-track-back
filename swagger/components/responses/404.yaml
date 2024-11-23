@@ -1,4 +1,4 @@
-description: 'Contact not found'
+description: 'Not found'
 content:
   application/json:
     schema:
@@ -16,4 +16,4 @@ content:
           example: 'Http Error'
         data:
           type: object
-          example: { error: 'Contact not found' }
+          example: { error: 'Not found' }
