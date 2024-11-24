@@ -5,16 +5,10 @@ import { swaggerDocs } from '../middlewares/swagger-docs.js';
 const router = Router();
 router.use('/auth', authRoutes);
 
-// Auth routes
-// TODO
+router.use('/auth', authRoutes);
 
-// User routes
-// TODO
-
-// Water routes
 router.use('/waters', waterRouter);
 
-// router.use('/', someRouter);
-
 router.use('/api-docs', swaggerDocs());
+
 export default router;
