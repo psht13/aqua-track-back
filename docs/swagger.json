@@ -33,6 +33,238 @@
         "summary": "Register user",
         "operationId": "registerUser",
         "description": "Create new user",
+    "/waters/{id}": {
+      "patch": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Update a water record",
+        "operationId": "updateWaterRecord",
+        "description": "Update an existing water record using JSON or multipart form data.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the water record to update",
+            "schema": {
+              "type": "string",
+              "example": "67422422135f1e6a56bf23fe"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "format": "integer",
+                    "example": 150,
+                    "description": "The amount of water consumed in liters"
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "2024-11-23T19:00:00",
+                    "description": "The date of water consumption"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Water consumption record updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/water"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "\"amount\" must be a positive number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "Water consumption record not found",
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Delete water record by ID",
+        "operationId": "deleteWaterRecord",
+        "description": "Delete a water record by its unique ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "67422422135f1e6a56bf23fe",
+              "description": "The unique ID of the water record"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully deleted the water record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "Water record not found",
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/waters": {
+      "post": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Create a new water record",
+        "operationId": "createWaterRecord",
+        "description": "Creates a water record using JSON or multipart form data.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "format": "integer",
+                    "example": 150,
+                    "description": "The amount of water consumed in liters"
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "2024-11-23T19:00:00",
+                    "description": "The date of water consumption"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Water consumption record created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/water"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "\"amount\" must be a positive number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/waters/byDay": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Returns a list of water records",
+        "operationId": "getWaterRecordsByDay",
+        "description": "Returns a list of water records by day",
         "security": [
           {
             "bearerAuth": []
@@ -60,25 +292,31 @@
                   }
                 }
               }
+        "parameters": [
+          {
+            "in": "query",
+            "name": "day",
+            "required": true,
+            "description": "Date",
+            "schema": {
+              "type": "string",
+              "example": "2024-11-24"
             }
           }
-        },
+        ],
         "responses": {
           "201": {
             "description": "Register user",
+          "200": {
+            "description": "Successfull response",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
-                      "example": 201
+                      "example": 200
                     },
                     "message": {
                       "type": "string",
@@ -87,6 +325,17 @@
                     "data": {
                       "type": "object",
                       "$ref": "#/components/schemas/user"
+                      "example": "Success"
+                    },
+                    "total": {
+                      "type": "integer",
+                      "example": 131
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/water"
+                      }
                     }
                   }
                 }
@@ -140,6 +389,8 @@
         "responses": {
           "200": {
             "description": "Logged in user",
+          "400": {
+            "description": "Invalid request format",
             "content": {
               "application/json": {
                 "schema": {
@@ -148,6 +399,7 @@
                     "status",
                     "message",
                     "data"
+                    "message"
                   ],
                   "properties": {
                     "status": {
@@ -165,6 +417,11 @@
                           "example": "XYbKR1jaTV4DneM5uRgxXzWSgwPFjK4ldSWNd2bv"
                         }
                       }
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "\"amount\" must be a positive number"
                     }
                   }
                 }
@@ -173,6 +430,118 @@
           },
           "404": {
             "$ref": "#/components/responses/404u"
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "Water consumption record not found",
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/waters/byMonth": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Returns a list of water records by selected interval",
+        "operationId": "getWaterRecordsByMonth",
+        "description": "Returns a list of water records by day",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "from",
+            "required": true,
+            "description": "Date",
+            "schema": {
+              "type": "string",
+              "example": "2024-11-24"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": true,
+            "description": "Date",
+            "schema": {
+              "type": "string",
+              "example": "2024-11-27"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfull response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "total": {
+                      "type": "integer",
+                      "example": 131
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/water"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "\"amount\" must be a positive number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "Water consumption record not found",
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -264,6 +633,9 @@
     "responses": {
       "409": {
         "description": "User with used email already exist",
+    "responses": {
+      "401": {
+        "description": "Unauthorized",
         "content": {
           "application/json": {
             "schema": {
@@ -292,6 +664,16 @@
                       "type": "string",
                       "example": "Email in use"
                     }
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Http Error"
+                },
+                "data": {
+                  "type": "object",
+                  "example": {
+                    "error": "Unauthorized"
                   }
                 }
               }
@@ -301,6 +683,8 @@
       },
       "404u": {
         "description": "User not found error",
+      "404": {
+        "description": "Not found",
         "content": {
           "application/json": {
             "schema": {
@@ -329,10 +713,95 @@
                       "type": "string",
                       "example": "User not found"
                     }
+                  "example": {
+                    "error": "Not found"
                   }
                 }
               }
             }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal server error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Something went wrong"
+                },
+                "data": {
+                  "type": "object",
+                  "example": {
+                    "error": "Internal server error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "water": {
+        "type": "object",
+        "required": [
+          "_id",
+          "amount",
+          "userId",
+          "curDailyDose",
+          "date"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Water entry's id",
+            "type": "string",
+            "example": "67422422135f1e6a56bf23fe"
+          },
+          "amount": {
+            "description": "Amount of water consumed (in milliliters)",
+            "type": "number",
+            "example": 500
+          },
+          "userId": {
+            "description": "Id of user that's logged water consumption",
+            "type": "string",
+            "example": "672e559aefd1ec206c1b77a8"
+          },
+          "curDailyDose": {
+            "description": "Current daily water consumption goal (in milliliters)",
+            "type": "number",
+            "example": 2000
+          },
+          "date": {
+            "description": "Date of water consumption entry",
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-11-23T12:34:56Z"
+          },
+          "createdAt": {
+            "description": "Timestamp when the entry was created",
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-11-23T12:34:56Z"
+          },
+          "updatedAt": {
+            "description": "Timestamp when the entry was last updated",
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-11-23T12:34:56Z"
           }
         }
       }

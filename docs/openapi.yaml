@@ -20,7 +20,20 @@ paths:
   /auth/login:
     post:
       $ref: ../swagger/paths/auth/login/post.yaml
-
+  /waters/{id}:
+    patch:
+      $ref: ../swagger/paths/water/{id}/patch.yaml
+    delete:
+      $ref: ../swagger/paths/water/{id}/delete.yaml
+  /waters:
+    post:
+      $ref: ../swagger/paths/water/post.yaml
+  /waters/byDay:
+    get:
+      $ref: ../swagger/paths/water/by-day/get.yaml
+  /waters/byMonth:
+    get:
+      $ref: ../swagger/paths/water/by-month/get.yaml
 components:
   securitySchemes:
     bearerAuth:

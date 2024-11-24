@@ -1,0 +1,59 @@
+tags:
+  - Water
+summary: Returns a list of water records
+operationId: getWaterRecordsByDay
+description: 'Returns a list of water records by day'
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: day
+    required: true
+    description: Date
+    schema:
+      type: string
+      example: 2024-11-24
+responses:
+  '200':
+    description: 'Successfull response'
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Success'
+            total:
+              type: integer
+              example: 131
+            data:
+              type: array
+              items:
+                $ref: ../../../components/schemas/water.yaml
+  '400':
+    description: 'Invalid request format'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: '"amount" must be a positive number'
+  '401':
+    $ref: ../../../components/responses/401.yaml
+  '404':
+    description: 'Water consumption record not found'
+    $ref: ../../../components/responses/404.yaml
+  '500':
+    $ref: ../../../components/responses/500.yaml
