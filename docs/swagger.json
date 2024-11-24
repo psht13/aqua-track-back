@@ -33,6 +33,150 @@
         "summary": "Register user",
         "operationId": "registerUser",
         "description": "Create new user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "User's email",
+                    "type": "string",
+                    "example": "mail@example.com"
+                  },
+                  "password": {
+                    "description": "User's password",
+                    "type": "string",
+                    "example": "d3%6J-!w"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Register user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully registered a user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "$ref": "#/components/responses/409"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Login user",
+        "operationId": "loginUser",
+        "description": "Login user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "User's email",
+                    "type": "string",
+                    "example": "mail@example.com"
+                  },
+                  "password": {
+                    "description": "User's password",
+                    "type": "string",
+                    "example": "d3%6J-!w"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Logged in user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully logged in an user!"
+                    },
+                    "data": {
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "example": "XYbKR1jaTV4DneM5uRgxXzWSgwPFjK4ldSWNd2bv"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404u"
+          }
+        }
+      }
+    },
     "/waters/{id}": {
       "patch": {
         "tags": [
@@ -270,28 +414,6 @@
             "bearerAuth": []
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "email",
-                  "password"
-                ],
-                "properties": {
-                  "email": {
-                    "description": "User's email",
-                    "type": "string",
-                    "example": "mail@example.com"
-                  },
-                  "password": {
-                    "description": "User's password",
-                    "type": "string",
-                    "example": "d3%6J-!w"
-                  }
-                }
-              }
         "parameters": [
           {
             "in": "query",
@@ -305,8 +427,6 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Register user",
           "200": {
             "description": "Successfull response",
             "content": {
@@ -320,11 +440,6 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully registered a user!"
-                    },
-                    "data": {
-                      "type": "object",
-                      "$ref": "#/components/schemas/user"
                       "example": "Success"
                     },
                     "total": {
@@ -342,53 +457,6 @@
               }
             }
           },
-          "409": {
-            "$ref": "#/components/responses/409"
-          }
-        }
-      }
-    },
-    "/auth/login": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Login user",
-        "operationId": "loginUser",
-        "description": "Login user",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "email",
-                  "password"
-                ],
-                "properties": {
-                  "email": {
-                    "description": "User's email",
-                    "type": "string",
-                    "example": "mail@example.com"
-                  },
-                  "password": {
-                    "description": "User's password",
-                    "type": "string",
-                    "example": "d3%6J-!w"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Logged in user",
           "400": {
             "description": "Invalid request format",
             "content": {
@@ -397,26 +465,11 @@
                   "type": "object",
                   "required": [
                     "status",
-                    "message",
-                    "data"
                     "message"
                   ],
                   "properties": {
                     "status": {
                       "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully logged in an user!"
-                    },
-                    "data": {
-                      "properties": {
-                        "accessToken": {
-                          "type": "string",
-                          "example": "XYbKR1jaTV4DneM5uRgxXzWSgwPFjK4ldSWNd2bv"
-                        }
-                      }
                       "example": 400
                     },
                     "message": {
@@ -428,8 +481,6 @@
               }
             }
           },
-          "404": {
-            "$ref": "#/components/responses/404u"
           "401": {
             "$ref": "#/components/responses/401"
           },
@@ -628,133 +679,7 @@
             "example": "2024-10-25T11:54:04.888Z"
           }
         }
-      }
-    },
-    "responses": {
-      "409": {
-        "description": "User with used email already exist",
-    "responses": {
-      "401": {
-        "description": "Unauthorized",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 409
-                },
-                "message": {
-                  "type": "string",
-                  "example": "ConflictError"
-                },
-                "data": {
-                  "type": "object",
-                  "required": [
-                    "message"
-                  ],
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Email in use"
-                    }
-                  "example": 401
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Http Error"
-                },
-                "data": {
-                  "type": "object",
-                  "example": {
-                    "error": "Unauthorized"
-                  }
-                }
-              }
-            }
-          }
-        }
       },
-      "404u": {
-        "description": "User not found error",
-      "404": {
-        "description": "Not found",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 404
-                },
-                "message": {
-                  "type": "string",
-                  "example": "NotFoundError"
-                },
-                "data": {
-                  "type": "object",
-                  "required": [
-                    "message"
-                  ],
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "User not found"
-                    }
-                  "example": {
-                    "error": "Not found"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "500": {
-        "description": "Internal server error",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 500
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Something went wrong"
-                },
-                "data": {
-                  "type": "object",
-                  "example": {
-                    "error": "Internal server error"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "schemas": {
       "water": {
         "type": "object",
         "required": [
@@ -802,6 +727,175 @@
             "type": "string",
             "format": "date-time",
             "example": "2024-11-23T12:34:56Z"
+          }
+        }
+      }
+    },
+    "responses": {
+      "401": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Http Error"
+                },
+                "data": {
+                  "type": "object",
+                  "example": {
+                    "error": "Unauthorized"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Http Error"
+                },
+                "data": {
+                  "type": "object",
+                  "example": {
+                    "error": "Not found"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "User with used email already exist",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 409
+                },
+                "message": {
+                  "type": "string",
+                  "example": "ConflictError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Email in use"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal server error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Something went wrong"
+                },
+                "data": {
+                  "type": "object",
+                  "example": {
+                    "error": "Internal server error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404u": {
+        "description": "User not found error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "NotFoundError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User not found"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
