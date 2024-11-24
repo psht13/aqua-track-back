@@ -1,7 +1,7 @@
 import express from 'express';
 import { ctrlWrapper } from '../utils/ctrl-wrapper.js';
 import { registerController, loginController } from '../controllers/auth.js';
-import { validateBody } from '../middlewares/validateBody.js';
+import { validateBody } from '../middlewares/validate-body.js';
 import { registerSchema, loginSchema } from '../validation/auth.js';
 
 const router = express.Router();

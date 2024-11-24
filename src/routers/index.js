@@ -3,7 +3,6 @@ import { Router } from 'express';
 import waterRouter from './water-router.js';
 import { swaggerDocs } from '../middlewares/swagger-docs.js';
 const router = Router();
-router.use('/auth', authRoutes);
 
 router.use('/auth', authRoutes);
 
