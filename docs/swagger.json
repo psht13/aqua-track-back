@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "version": "1.0.0",
-    "title": "Contacts Book",
+    "title": "Aqua Track",
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -12,418 +12,27 @@
   "servers": [
     {
       "url": "http://127.0.0.1:8081"
-    },
-    {
-      "url": "https://contacts-book.up.railway.app"
     }
   ],
   "tags": [
     {
-      "name": "Contacts",
-      "description": "Operations with contacts"
+      "name": "Users",
+      "description": "Operations with Users"
+    },
+    {
+      "name": "Auth",
+      "description": "Auth operations"
     }
   ],
   "paths": {
-    "/contacts/{contactId}": {
-      "get": {
-        "tags": [
-          "Contacts"
-        ],
-        "summary": "Get contact by ID",
-        "operationId": "getContact",
-        "description": "Get contact by ID",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "contactId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "672e559aefd1ec206c1b77a8"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Get contact by ID",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully found contact!"
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/contact"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Contacts"
-        ],
-        "summary": "Update contact by ID",
-        "operationId": "updateContact",
-        "description": "Update contact by ID",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "contactId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "672e559aefd1ec206c1b77a8"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "name",
-                  "phoneNumber",
-                  "contactType",
-                  "isFavourite"
-                ],
-                "properties": {
-                  "name": {
-                    "description": "Contact's name",
-                    "type": "string",
-                    "example": "John Doe"
-                  },
-                  "contactType": {
-                    "description": "Contact's type",
-                    "type": "string",
-                    "enum": [
-                      "work",
-                      "home",
-                      "personal"
-                    ],
-                    "example": "work"
-                  },
-                  "phoneNumber": {
-                    "description": "Contact's phone number",
-                    "type": "string",
-                    "example": "+380503456789"
-                  },
-                  "isFavourite": {
-                    "description": "Contact's isFavourite",
-                    "type": "boolean",
-                    "example": "true or false"
-                  },
-                  "email": {
-                    "description": "Contact's email",
-                    "type": "string"
-                  },
-                  "photo": {
-                    "description": "Contact's photo",
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Update contact by ID",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully updated contact!"
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/contact"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Contacts"
-        ],
-        "summary": "Delete contact by ID",
-        "operationId": "deleteContact",
-        "description": "Delete contact by ID",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "contactId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "672e559aefd1ec206c1b77a8"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content - contact successfully deleted"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
-          }
-        }
-      }
-    },
-    "/contacts": {
-      "get": {
-        "tags": [
-          "Contacts"
-        ],
-        "summary": "Get all contacts",
-        "operationId": "getContacts",
-        "description": "Get all contacts",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "page",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "example": 1,
-              "default": 1
-            }
-          },
-          {
-            "name": "perPage",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "example": 5,
-              "default": 10
-            }
-          },
-          {
-            "name": "sortOrder",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ],
-              "example": "asc",
-              "default": "asc"
-            }
-          },
-          {
-            "name": "sortBy",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "_id",
-                "name",
-                "email",
-                "phoneNumber",
-                "contactType",
-                "isFavourite",
-                "updatedAt",
-                "createdAt"
-              ],
-              "example": "name",
-              "default": "_id"
-            }
-          },
-          {
-            "name": "type",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "work",
-                "home",
-                "personal"
-              ],
-              "example": "work"
-            }
-          },
-          {
-            "name": "isFavourite",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "boolean",
-              "example": true
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Get all contacts",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "enum": [
-                        "Successfully found contact!",
-                        "No contacts found"
-                      ],
-                      "example": "Successfully found contact!"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "contacts": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/contact"
-                          }
-                        },
-                        "sortBy": {
-                          "type": "string",
-                          "example": "name"
-                        },
-                        "sortOrder": {
-                          "type": "string",
-                          "example": "asc"
-                        },
-                        "page": {
-                          "type": "integer",
-                          "example": 1
-                        },
-                        "perPage": {
-                          "type": "integer",
-                          "example": 10
-                        },
-                        "totalItems": {
-                          "type": "integer",
-                          "example": 10
-                        },
-                        "totalPages": {
-                          "type": "integer",
-                          "example": 1
-                        },
-                        "hasNextPage": {
-                          "type": "boolean",
-                          "example": false
-                        },
-                        "hasPreviousPage": {
-                          "type": "boolean",
-                          "example": false
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
-          }
-        }
-      },
+    "/auth/register": {
       "post": {
         "tags": [
-          "Contacts"
+          "Auth"
         ],
-        "summary": "Create a new contact",
-        "operationId": "createContact",
-        "description": "Create a new contact",
+        "summary": "Register user",
+        "operationId": "registerUser",
+        "description": "Create new user",
         "security": [
           {
             "bearerAuth": []
@@ -431,49 +40,23 @@
         ],
         "requestBody": {
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "required": [
-                  "name",
-                  "phoneNumber",
-                  "contactType",
-                  "isFavourite"
+                  "email",
+                  "password"
                 ],
                 "properties": {
-                  "name": {
-                    "description": "Contact's name",
-                    "type": "string",
-                    "example": "John Doe"
-                  },
-                  "contactType": {
-                    "description": "Contact's type",
-                    "type": "string",
-                    "enum": [
-                      "work",
-                      "home",
-                      "personal"
-                    ],
-                    "example": "work"
-                  },
-                  "phoneNumber": {
-                    "description": "Contact's phone number",
-                    "type": "string",
-                    "example": "+380503456789"
-                  },
-                  "isFavourite": {
-                    "description": "Contact's isFavourite",
-                    "type": "boolean",
-                    "example": true
-                  },
                   "email": {
-                    "description": "Contact's email",
-                    "type": "string"
-                  },
-                  "photo": {
-                    "description": "Contact's photo",
+                    "description": "User's email",
                     "type": "string",
-                    "format": "binary"
+                    "example": "mail@example.com"
+                  },
+                  "password": {
+                    "description": "User's password",
+                    "type": "string",
+                    "example": "d3%6J-!w"
                   }
                 }
               }
@@ -482,7 +65,7 @@
         },
         "responses": {
           "201": {
-            "description": "Contact created successfully",
+            "description": "Register user",
             "content": {
               "application/json": {
                 "schema": {
@@ -499,10 +82,375 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully created contact!"
+                      "example": "Successfully registered a user!"
                     },
                     "data": {
-                      "$ref": "#/components/schemas/contact"
+                      "type": "object",
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "$ref": "#/components/responses/409"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Login user",
+        "operationId": "loginUser",
+        "description": "Login user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "User's email",
+                    "type": "string",
+                    "example": "mail@example.com"
+                  },
+                  "password": {
+                    "description": "User's password",
+                    "type": "string",
+                    "example": "d3%6J-!w"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Logged in user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully logged in an user!"
+                    },
+                    "data": {
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "example": "XYbKR1jaTV4DneM5uRgxXzWSgwPFjK4ldSWNd2bv"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404u"
+          }
+        }
+      }
+    },
+    "/waters/{id}": {
+      "patch": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Update a water record",
+        "operationId": "updateWaterRecord",
+        "description": "Update an existing water record using JSON or multipart form data.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the water record to update",
+            "schema": {
+              "type": "string",
+              "example": "67422422135f1e6a56bf23fe"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "format": "integer",
+                    "example": 150,
+                    "description": "The amount of water consumed in liters"
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "2024-11-23T19:00:00",
+                    "description": "The date of water consumption"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Water consumption record updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/water"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "\"amount\" must be a positive number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "Water consumption record not found",
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Delete water record by ID",
+        "operationId": "deleteWaterRecord",
+        "description": "Delete a water record by its unique ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "67422422135f1e6a56bf23fe",
+              "description": "The unique ID of the water record"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully deleted the water record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "Water record not found",
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/waters": {
+      "post": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Create a new water record",
+        "operationId": "createWaterRecord",
+        "description": "Creates a water record using JSON or multipart form data.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "format": "integer",
+                    "example": 150,
+                    "description": "The amount of water consumed in liters"
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "2024-11-23T19:00:00",
+                    "description": "The date of water consumption"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Water consumption record created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/water"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "\"amount\" must be a positive number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/waters/byDay": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Returns a list of water records",
+        "operationId": "getWaterRecordsByDay",
+        "description": "Returns a list of water records by day",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "day",
+            "required": true,
+            "description": "Date",
+            "schema": {
+              "type": "string",
+              "example": "2024-11-24"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfull response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "total": {
+                      "type": "integer",
+                      "example": 131
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/water"
+                      }
                     }
                   }
                 }
@@ -510,10 +458,138 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/400"
+            "description": "Invalid request format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "\"amount\" must be a positive number"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "Water consumption record not found",
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/waters/byMonth": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Returns a list of water records by selected interval",
+        "operationId": "getWaterRecordsByMonth",
+        "description": "Returns a list of water records by day",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "from",
+            "required": true,
+            "description": "Date",
+            "schema": {
+              "type": "string",
+              "example": "2024-11-24"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": true,
+            "description": "Date",
+            "schema": {
+              "type": "string",
+              "example": "2024-11-27"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfull response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "total": {
+                      "type": "integer",
+                      "example": 131
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/water"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "\"amount\" must be a positive number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "Water consumption record not found",
+            "$ref": "#/components/responses/404"
           },
           "500": {
             "$ref": "#/components/responses/500"
@@ -530,111 +606,132 @@
       }
     },
     "schemas": {
-      "contact": {
+      "user": {
         "type": "object",
         "required": [
-          "_id",
-          "name",
-          "phoneNumber",
-          "contactType",
-          "isFavourite",
-          "userId",
-          "createdAt",
-          "updatedAt"
+          "email",
+          "password"
         ],
         "properties": {
           "_id": {
-            "description": "Contact's id",
+            "description": "User's ID (auto-generated by the database)",
+            "type": "string",
+            "example": "671b3a69a4f2775d477049fc"
+          },
+          "name": {
+            "description": "User's name (optional, default is an empty string)",
+            "type": "string",
+            "example": "Johnny Doeh",
+            "default": ""
+          },
+          "email": {
+            "description": "User's email (required, must be unique)",
+            "type": "string",
+            "example": "mail@example.com"
+          },
+          "password": {
+            "description": "User's password (required)",
+            "type": "string",
+            "example": "securePassword123"
+          },
+          "avatarUrl": {
+            "description": "URL of the user's avatar (optional, default is null)",
+            "type": "string",
+            "example": "https://res.cloudinary.com/deoxrcsvx/image/upload/v1729857245/image.png",
+            "default": null
+          },
+          "gender": {
+            "description": "User's gender (optional, default is 'Woman')",
+            "type": "string",
+            "enum": [
+              "Woman",
+              "Man"
+            ],
+            "example": "Woman",
+            "default": "Woman"
+          },
+          "weight": {
+            "description": "User's weight in kg (optional, default is 0)",
+            "type": "number",
+            "example": 75,
+            "default": 0
+          },
+          "activeTime": {
+            "description": "User's active time in minutes per day (optional, default is 0)",
+            "type": "number",
+            "example": 60,
+            "default": null
+          },
+          "dailyNorm": {
+            "description": "User's daily water consumption norm in ml (optional, default is 1500)",
+            "type": "number",
+            "example": 1500,
+            "default": 1500
+          },
+          "createdAt": {
+            "description": "DB-generated on register",
+            "type": "string",
+            "example": "2024-10-25T06:27:53.173Z"
+          },
+          "updatedAt": {
+            "description": "DB-generated on update",
+            "type": "string",
+            "example": "2024-10-25T11:54:04.888Z"
+          }
+        }
+      },
+      "water": {
+        "type": "object",
+        "required": [
+          "_id",
+          "amount",
+          "userId",
+          "curDailyDose",
+          "date"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Water entry's id",
+            "type": "string",
+            "example": "67422422135f1e6a56bf23fe"
+          },
+          "amount": {
+            "description": "Amount of water consumed (in milliliters)",
+            "type": "number",
+            "example": 500
+          },
+          "userId": {
+            "description": "Id of user that's logged water consumption",
             "type": "string",
             "example": "672e559aefd1ec206c1b77a8"
           },
-          "name": {
-            "description": "Contact's name",
-            "type": "string",
-            "example": "John Doe"
+          "curDailyDose": {
+            "description": "Current daily water consumption goal (in milliliters)",
+            "type": "number",
+            "example": 2000
           },
-          "contactType": {
-            "description": "Contact's type",
+          "date": {
+            "description": "Date of water consumption entry",
             "type": "string",
-            "enum": [
-              "work",
-              "home",
-              "personal"
-            ],
-            "example": "work"
-          },
-          "phoneNumber": {
-            "description": "Contact's phone number",
-            "type": "string",
-            "example": "+380503456789"
-          },
-          "userId": {
-            "description": "Contact's user id",
-            "type": "string",
-            "example": "66a92312c1de214c68f17d10"
-          },
-          "email": {
-            "description": "Contact's email",
-            "type": "string",
-            "example": "johndoe@gmail.com",
-            "default": null
-          },
-          "isFavourite": {
-            "description": "Contact's favourite status",
-            "type": "boolean",
-            "example": true
-          },
-          "photo": {
-            "description": "Contact's photo",
-            "type": "string",
-            "example": "https://res.cloudinary.com/dha4xvgfi/image/upload/v1724438545/g3n05nth0sgqzyakh0dm.jpg",
-            "default": null
+            "format": "date-time",
+            "example": "2024-11-23T12:34:56Z"
           },
           "createdAt": {
-            "description": "Contact's created at",
+            "description": "Timestamp when the entry was created",
             "type": "string",
-            "example": "2022-11-24T12:00:00.000Z"
+            "format": "date-time",
+            "example": "2024-11-23T12:34:56Z"
           },
           "updatedAt": {
-            "description": "Contact's updated at",
+            "description": "Timestamp when the entry was last updated",
             "type": "string",
-            "example": "2022-11-24T12:00:00.000Z"
+            "format": "date-time",
+            "example": "2024-11-23T12:34:56Z"
           }
         }
       }
     },
     "responses": {
-      "400": {
-        "description": "Validation error",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 400
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Http Error"
-                },
-                "data": {
-                  "type": "object",
-                  "example": {
-                    "error": "Request body validation error"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "401": {
         "description": "Unauthorized",
         "content": {
@@ -667,7 +764,7 @@
         }
       },
       "404": {
-        "description": "Contact not found",
+        "description": "Not found",
         "content": {
           "application/json": {
             "schema": {
@@ -689,7 +786,44 @@
                 "data": {
                   "type": "object",
                   "example": {
-                    "error": "Contact not found"
+                    "error": "Not found"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "User with used email already exist",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 409
+                },
+                "message": {
+                  "type": "string",
+                  "example": "ConflictError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Email in use"
+                    }
                   }
                 }
               }
@@ -721,6 +855,43 @@
                   "type": "object",
                   "example": {
                     "error": "Internal server error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404u": {
+        "description": "User not found error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "NotFoundError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User not found"
+                    }
                   }
                 }
               }

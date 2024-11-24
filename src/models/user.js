@@ -1,19 +1,20 @@
-import mongoose from 'mongoose';
+import { model, Schema } from 'mongoose';
 
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: false,
+      default: '',
     },
     email: {
       type: String,
       required: true,
       unique: true,
+      match: [/\S+@\S+\.\S+/, 'Please use a valid email address'],
     },
     password: {
       type: String,
-      minlength: [6, 'Password must be at least 6 characters'],
       required: true,
     },
     avatarUrl: {
@@ -22,19 +23,17 @@ const userSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
-      required: true,
-      enum: ['women', 'men'],
-      default: 'women',
+      enum: ['Woman', 'Man'],
+      default: 'Woman',
     },
     weight: {
       type: Number,
+      required: false,
       default: 0,
-      min: [0, 'Weight cannot be negative'],
     },
     activeTime: {
       type: Number,
       default: 0,
-      min: [0, 'Active Time cannot be negative'],
     },
     dailyNorm: {
       type: Number,
@@ -42,8 +41,8 @@ const userSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true,
     versionKey: false,
+    timestamps: true,
   },
 );
 
@@ -53,4 +52,4 @@ userSchema.methods.toJSON = function () {
   return obj;
 };
 
-export const UserCollection = mongoose.model('User', userSchema);
+export const User = model('User', userSchema);

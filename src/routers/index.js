@@ -1,9 +1,14 @@
+import authRoutes from './auth.js';
 import { Router } from 'express';
-import usersRouter from './users.js';
-import { auth } from '../middlewares/auth.js';
-
+import waterRouter from './water-router.js';
+import { swaggerDocs } from '../middlewares/swagger-docs.js';
 const router = Router();
+router.use('/auth', authRoutes);
 
-router.use('/users', auth, usersRouter);
+router.use('/auth', authRoutes);
+
+router.use('/waters', waterRouter);
+
+router.use('/api-docs', swaggerDocs());
 
 export default router;
