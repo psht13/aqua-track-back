@@ -1,17 +1,25 @@
 openapi: 3.1.0
 info:
   version: 1.0.0
-  title: Contacts Book
+  title: Aqua Track
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   description: Application for managing contacts
 tags:
-  - name: Contacts
-    description: Operations with contacts
+  - name: Users
+    description: Operations with Users
+  - name: Auth
+    description: Auth operations
 servers:
   - url: http://127.0.0.1:8081
 paths:
+  /auth/register:
+    post:
+      $ref: ../swagger/paths/auth/register/post.yaml
+  /auth/login:
+    post:
+      $ref: ../swagger/paths/auth/login/post.yaml
 
 components:
   securitySchemes:
