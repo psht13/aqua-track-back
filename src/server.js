@@ -2,6 +2,7 @@ import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
 import { env } from './utils/env.js';
 import { pinoConfig } from './utils/config.js';
@@ -16,7 +17,7 @@ const jsonParser = express.json();
 
 export const setupServer = () => {
   const app = express();
-
+  app.use('/api-docs', swaggerDocs());
   app.use(cors());
 
   app.use(cookieParser());
