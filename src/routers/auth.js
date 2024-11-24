@@ -1,6 +1,10 @@
 import express from 'express';
 import { ctrlWrapper } from '../utils/ctrl-wrapper.js';
-import { registerController, loginController } from '../controllers/auth.js';
+import {
+  registerController,
+  loginController,
+  countController,
+} from '../controllers/auth.js';
 import { validateBody } from '../middlewares/validate-body.js';
 import { registerSchema, loginSchema } from '../validation/auth.js';
 
@@ -19,5 +23,7 @@ router.post(
   validateBody(loginSchema),
   ctrlWrapper(loginController),
 );
+
+router.get('/user-count', ctrlWrapper(countController));
 
 export default router;
