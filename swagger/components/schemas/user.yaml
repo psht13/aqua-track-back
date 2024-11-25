@@ -10,16 +10,12 @@ properties:
   name:
     description: "User's name (optional, default is an empty string)"
     type: string
-    example: 'Johnny Doeh'
+    example: 'John Doe'
     default: ''
   email:
     description: "User's email (required, must be unique)"
     type: string
     example: mail@example.com
-  password:
-    description: "User's password (required)"
-    type: string
-    example: securePassword123
   avatarUrl:
     description: "URL of the user's avatar (optional, default is null)"
     type: string
