@@ -5,7 +5,10 @@ import { validateBody } from '../middlewares/validate-body.js';
 import { updateUserSchema } from '../validation/users.js';
 import { isValidID } from '../middlewares/is-valid-id.js';
 import { upload } from '../middlewares/uploads.js';
-import { patchUserController } from '../controllers/users.js';
+import {
+  patchUserController,
+  currentUserController,
+} from '../controllers/users.js';
 
 const router = Router();
 
@@ -19,5 +22,7 @@ router.patch(
   validateBody(updateUserSchema),
   ctrlWrapper(patchUserController),
 );
+
+router.get('/me', ctrlWrapper(currentUserController));
 
 export default router;

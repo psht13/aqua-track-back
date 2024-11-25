@@ -17,6 +17,9 @@ paths:
   /users/{userId}:
     patch:
       $ref: ../swagger/paths/users/{userId}/patch.yaml
+  /users/me:
+    get:
+      $ref: ../swagger/paths/users/me/get.yaml
   /auth/register:
     post:
       $ref: ../swagger/paths/auth/register/post.yaml
