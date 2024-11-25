@@ -1,0 +1,69 @@
+tags:
+- Users
+summary: Update user by id
+operationId: updateUser
+description: 'Update user by Id'
+security:
+- bearerAuth: []
+parameters:
+- in: path
+  name: userId
+  required: true
+  schema:
+    type: string
+    example: 67333b7e721cbb7aed8baba5
+requestBody:
+  required: true
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          name:
+            description: "User's name"
+            type: string
+            example: "John Doe"
+          weight:
+            description: "User's weight in kilograms."
+            type: number
+            example: 52
+          activeTime:
+            description: "The number of minutes the user has been active today."
+            type: number
+            example: 12
+          dailyNorm:
+            description: "The user's daily water intake goal in milliliters."
+            type: number
+            example: 500
+          gender:
+            description: "Specifies the gender of the user. Acceptable values are 'Woman' or 'Man'."
+            type: string
+            enum: [ 'Woman', 'Man' ]
+          avatarUrl:
+            description: "User's photo"
+            type: string
+            format: binary
+responses:
+  '200':
+    description: 'Update contact by id'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+          - status
+          - message
+          - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully patched a contact'
+            data:
+              $ref: ../../../components/schemas/user.yaml
+  '404':
+    description: 'User not found'
+    $ref: ../../../components/responses/404.yaml
+   
