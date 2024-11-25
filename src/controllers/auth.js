@@ -1,4 +1,5 @@
 import { registerUser, loginUser } from '../services/auth.js';
+import { User } from '../models/user.js';
 
 /* Configures the settings for creating session cookies. */
 const setupSession = (res, session) => {
@@ -39,3 +40,16 @@ export async function loginController(req, res) {
     },
   });
 }
+
+export const countController = async (req, res, next) => {
+  try {
+    const userCount = await User.countDocuments();
+    res.status(200).json({
+      status: 200,
+      message: 'Total users count fetched successfully',
+      totalUsers: userCount,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
