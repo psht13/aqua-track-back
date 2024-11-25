@@ -9,11 +9,7 @@ import {
 import httpErrors from 'http-errors';
 
 export const getWaterByIntervalController = async (req, res, next) => {
-  // TODO get actual user data from middleware
-  const user = {
-    _id: 'test',
-    dailyDose: 1.5,
-  };
+  const user = req.user;
   const { from, to } = req.query;
   const response = await getWaterByInterval(from, to, user);
   res.status(200).json({
@@ -26,11 +22,7 @@ export const getWaterByIntervalController = async (req, res, next) => {
   });
 };
 export const getWaterByDayController = async (req, res, next) => {
-  // TODO get actual user data from middleware
-  const user = {
-    _id: 'test',
-    dailyDose: 1.5,
-  };
+  const user = req.user;
   const { day } = req.query;
   const response = await getWaterByDay(day, user);
   res.status(200).json({
@@ -41,10 +33,7 @@ export const getWaterByDayController = async (req, res, next) => {
   });
 };
 export const addWaterRecordController = async (req, res, next) => {
-  const user = {
-    _id: 'test',
-    dailyDose: 1.5,
-  };
+  const user = req.user;
   const { amount, date } = req.body;
 
   const response = await addWaterRecord({ amount, date }, user);
@@ -55,10 +44,7 @@ export const addWaterRecordController = async (req, res, next) => {
   });
 };
 export const updateWaterRecordController = async (req, res, next) => {
-  const user = {
-    _id: 'test',
-    dailyDose: 1.5,
-  };
+  const user = req.user;
   const { id } = req.params;
   const { amount, date } = req.body;
   const response = await updateWaterRecord(id, { amount, date }, user);
@@ -69,10 +55,7 @@ export const updateWaterRecordController = async (req, res, next) => {
   });
 };
 export const deleteWaterRecordController = async (req, res, next) => {
-  const user = {
-    _id: 'test',
-    dailyDose: 1.5,
-  };
+  const user = req.user;
   const { id } = req.params;
   const response = await deleteWaterRecord(id, user);
   if (!response) throw httpErrors(404, 'This record is not found');

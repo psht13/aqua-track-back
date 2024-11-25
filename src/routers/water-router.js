@@ -13,10 +13,11 @@ import {
   createWaterSchema,
   updateWaterSchema,
 } from '../validation/water-validator.js';
+import { auth } from '../middlewares/auth.js';
 
 const router = express.Router();
 
-// TODO add authentication for routes
+router.use(auth);
 
 /**
  * @method returns a list of water records filtered by a month
