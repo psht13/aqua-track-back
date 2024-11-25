@@ -33,3 +33,17 @@ export const patchUserController = async (req, res, next) => {
     data: result.user,
   });
 };
+
+export const currentUserController = async (req, res) => {
+  const { user } = req;
+  if (!user) {
+    throw createHttpErrors(401, 'Unauthorized: User data is not available');
+  }
+  res.json({
+    status: 'success',
+    code: 200,
+    data: {
+      user,
+    },
+  });
+};

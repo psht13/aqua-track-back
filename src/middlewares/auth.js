@@ -30,8 +30,7 @@ export async function auth(req, res, next) {
   if (user === null) {
     return next(createHttpError(401, 'Session not found'));
   }
-
-  req.user = { id: user._id, name: user.name, dailyNorm: user.dailyNorm };
-
+  //req.user = { id: user._id, name: user.name, dailyNorm: user.dailyNorm };
+  req.user = user;
   next();
 }
