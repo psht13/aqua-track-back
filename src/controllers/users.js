@@ -1,7 +1,9 @@
 import fs from 'node:fs/promises';
+import createHttpError from 'http-errors';
 import { env } from '../utils/env.js';
 import { updateUser } from '../services/users.js';
 import { uploadToCloudinary } from '../utils/upload-to-cloudinary.js';
+import { saveFileToUploadDir } from '../utils/save-file-to-upload-dir.js';
 
 export const patchUserController = async (req, res, next) => {
   const { userId } = req.params;
@@ -21,7 +23,7 @@ export const patchUserController = async (req, res, next) => {
     avatarUrl,
   });
   if (!result) {
-    next(createHttpErrors(404, 'Contact not found'));
+    next(createHttpError(404, 'Contact not found'));
     return;
   }
 

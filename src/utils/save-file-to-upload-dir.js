@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { UPLOAD_DIR, TEMP_UPLOAD_DIR } from '../constants.js';
+import { UPLOAD_DIR, TEMP_UPLOAD_DIR } from '../constants/index.js';
 import { env } from '../utils/env.js';
 
 export async function saveFileToUploadDir(file) {
