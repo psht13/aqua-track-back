@@ -6,7 +6,7 @@ required:
   - curDailyDose
   - date
 properties:
-  _id:
+  id:
     description: "Water entry's id"
     type: string
     example: '67422422135f1e6a56bf23fe'
