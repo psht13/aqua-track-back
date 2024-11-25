@@ -1,22 +1,21 @@
-import { UserCollection } from '../models/user';
+import { User } from '../models/user.js';
 
-export const updateUser = async (userId, payload, waterId) => {
+export const updateUser = async (userId, payload) => {
   try {
-    const user = await UserCollection.findOneAndUpdate(
+    const user = await User.findOneAndUpdate(
       {
         _id: userId,
-        waterId: waterId,
       },
       payload,
       {
         new: true,
-        includeResultMetadata: true,
+        upsert: false,
       },
     );
-    if (!rawResult || !rawResult.value) return null;
+    if (!user) return null;
     return {
-      user: rawResult.value,
-      isNew: Boolean(rawResult?.lastErrorObject?.upserted),
+      user,
+      isNew: false,
     };
   } catch (error) {
     throw new Error('Failed to update user');

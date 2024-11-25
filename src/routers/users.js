@@ -13,7 +13,7 @@ const jsonParser = express.json();
 
 router.patch(
   '/:userId',
-  upload.single('photo'),
+  upload.single('avatarUrl'),
   isValidID,
   jsonParser,
   validateBody(updateUserSchema),

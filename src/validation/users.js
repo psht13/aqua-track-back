@@ -7,9 +7,8 @@ export const updateUserSchema = Joi.object({
     'string.max': 'User should have at most 20 characters',
   }),
   email: Joi.string().min(3).max(20),
-  gender: Joi.string().valid('woman', ' man'),
+  gender: Joi.string().valid('Woman', 'Man'),
   weight: Joi.number(),
   activeTime: Joi.number(),
   dailyNorm: Joi.number(),
-  avatarUrl: Joi.string(),
 });
