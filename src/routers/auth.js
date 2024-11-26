@@ -6,9 +6,15 @@ import {
   countController,
   logoutController,
   refreshController,
+  getOauthController,
+  confirmOauthController,
 } from '../controllers/auth.js';
 import { validateBody } from '../middlewares/validate-body.js';
-import { registerSchema, loginSchema } from '../validation/auth.js';
+import {
+  registerSchema,
+  loginSchema,
+  confirmOauthSchema,
+} from '../validation/auth.js';
 
 const router = express.Router();
 const jsonParser = express.json();
@@ -30,5 +36,14 @@ router.post('/logout', ctrlWrapper(logoutController));
 router.post('/refresh', ctrlWrapper(refreshController));
 
 router.get('/user-count', ctrlWrapper(countController));
+
+router.get('/get-oauth', ctrlWrapper(getOauthController));
+
+router.post(
+  '/confirm-oauth',
+  jsonParser,
+  validateBody(confirmOauthSchema),
+  ctrlWrapper(confirmOauthController),
+);
 
 export default router;

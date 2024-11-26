@@ -67,3 +67,33 @@ export async function refreshSession(sessionId, refreshToken) {
     refreshTokenValidUntil: new Date(Date.now() + THIRTY_DAY),
   });
 }
+
+export async function loginOrRegisterUser(payload) {
+  const user = await User.findOne({ email: payload.email });
+  if (user === null) {
+    const password = await bcrypt.hash(
+      crypto.randomBytes(30).toString('base64'),
+      10,
+    );
+    const createdUser = await User.create({
+      name: payload.name,
+      email: payload.email,
+      password,
+    });
+    return await Session.create({
+      userId: createdUser._id,
+      accessToken: crypto.randomBytes(30).toString('base64'),
+      refreshToken: crypto.randomBytes(30).toString('base64'),
+      accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+      refreshTokenValidUntil: new Date(Date.now() + THIRTY_DAY),
+    });
+  }
+  await Session.deleteOne({ userId: user._id });
+  return await Session.create({
+    userId: user._id,
+    accessToken: crypto.randomBytes(30).toString('base64'),
+    refreshToken: crypto.randomBytes(30).toString('base64'),
+    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    refreshTokenValidUntil: new Date(Date.now() + THIRTY_DAY),
+  });
+}
