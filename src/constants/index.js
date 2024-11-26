@@ -5,6 +5,7 @@ export const CLOUDINARY = {
   API_KEY: 'CLOUDINARY_API_KEY',
   API_SECRET: 'CLOUDINARY_API_SECRET',
 };
+export const ENABLE_CLOUDINARY = true;
 
 export const TEMP_UPLOAD_DIR = path.join(process.cwd(), 'temp');
 
