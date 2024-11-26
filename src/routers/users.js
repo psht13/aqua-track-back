@@ -22,16 +22,15 @@ const jsonParser = express.json();
 
 router.patch(
   '/:userId',
-  auth,
   upload.single('avatarUrl'),
   isValidID,
   jsonParser,
   validateBody(updateUserSchema),
   ctrlWrapper(patchUserController),
 );
-router.post('/logout', auth, ctrlWrapper(logoutController));
+router.post('/logout', ctrlWrapper(logoutController));
 
-router.post('/refresh', auth, ctrlWrapper(refreshController));
+router.post('/refresh', ctrlWrapper(refreshController));
 
 router.get('/me', ctrlWrapper(currentUserController));
 
