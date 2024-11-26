@@ -35,6 +35,9 @@ export const getWaterByInterval = async (from, to, user) => {
       date: e.date,
       amount: e.amount,
       percent: calculateDailyDosePercent(e.amount, e.curDailyDose),
+      curDailyDose: e.curDailyDose,
+      createdAt: e.createdAt,
+      updatedAt: e.updatedAt,
     });
   });
   return output;
@@ -72,6 +75,9 @@ export const getWaterByDay = async (day, user) => {
       date: e.date,
       amount: e.amount,
       percent: calculateDailyDosePercent(e.amount, e.curDailyDose),
+      curDailyDose: e.curDailyDose,
+      createdAt: e.createdAt,
+      updatedAt: e.updatedAt,
     });
   });
   return output;
