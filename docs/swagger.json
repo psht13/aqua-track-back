@@ -12,6 +12,9 @@
   "servers": [
     {
       "url": "http://127.0.0.1:8081"
+    },
+    {
+      "url": "https://aqua-track-back.up.railway.app"
     }
   ],
   "tags": [
@@ -28,7 +31,7 @@
     "/users/{userId}": {
       "patch": {
         "tags": [
-          "users"
+          "Users"
         ],
         "summary": "Update user by id",
         "operationId": "updateUser",
@@ -126,6 +129,117 @@
           "404": {
             "description": "User not found",
             "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/users/me": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get data about the current user",
+        "operationId": "getCurrentUser",
+        "description": "Retrieve information about the currently authenticated user.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved current user data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "type": "object",
+                          "required": [
+                            "_id",
+                            "name",
+                            "email",
+                            "avatarUrl",
+                            "gender",
+                            "weight",
+                            "activeTime",
+                            "dailyNorm",
+                            "createdAt",
+                            "updatedAt"
+                          ],
+                          "properties": {
+                            "_id": {
+                              "type": "string",
+                              "example": "674346608217f8bb0c28a097"
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "Лексі Rosa"
+                            },
+                            "email": {
+                              "type": "string",
+                              "example": "alex@gmail.com"
+                            },
+                            "avatarUrl": {
+                              "type": "string",
+                              "example": "https://res.cloudinary.com/dzon9bagg/image/upload/v1732558201/z2coslezrkdw3bpz9mqb.jpg"
+                            },
+                            "gender": {
+                              "type": "string",
+                              "example": "Woman"
+                            },
+                            "weight": {
+                              "type": "number",
+                              "example": 100
+                            },
+                            "activeTime": {
+                              "type": "number",
+                              "example": 60
+                            },
+                            "dailyNorm": {
+                              "type": "number",
+                              "example": 1500
+                            },
+                            "createdAt": {
+                              "type": "string",
+                              "format": "date-time",
+                              "example": "2024-11-24T15:29:36.066Z"
+                            },
+                            "updatedAt": {
+                              "type": "string",
+                              "format": "date-time",
+                              "example": "2024-11-25T20:12:55.256Z"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -778,18 +892,13 @@
           "name": {
             "description": "User's name (optional, default is an empty string)",
             "type": "string",
-            "example": "Johnny Doeh",
+            "example": "John Doe",
             "default": ""
           },
           "email": {
             "description": "User's email (required, must be unique)",
             "type": "string",
             "example": "mail@example.com"
-          },
-          "password": {
-            "description": "User's password (required)",
-            "type": "string",
-            "example": "securePassword123"
           },
           "avatarUrl": {
             "description": "URL of the user's avatar (optional, default is null)",
@@ -847,7 +956,7 @@
           "date"
         ],
         "properties": {
-          "_id": {
+          "id": {
             "description": "Water entry's id",
             "type": "string",
             "example": "67422422135f1e6a56bf23fe"

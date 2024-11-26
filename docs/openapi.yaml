@@ -13,10 +13,14 @@ tags:
     description: Auth operations
 servers:
   - url: http://127.0.0.1:8081
+  - url: https://aqua-track-back.up.railway.app
 paths:
   /users/{userId}:
     patch:
       $ref: ../swagger/paths/users/{userId}/patch.yaml
+  /users/me:
+    get:
+      $ref: ../swagger/paths/users/me/get.yaml
   /auth/register:
     post:
       $ref: ../swagger/paths/auth/register/post.yaml

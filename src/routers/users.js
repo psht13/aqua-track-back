@@ -11,6 +11,10 @@ import {
   refreshController,
 } from '../controllers/users.js';
 import { auth } from '../middlewares/auth.js';
+import {
+  patchUserController,
+  currentUserController,
+} from '../controllers/users.js';
 
 const router = Router();
 
@@ -28,5 +32,7 @@ router.patch(
 router.post('/logout', auth, ctrlWrapper(logoutController));
 
 router.post('/refresh', auth, ctrlWrapper(refreshController));
+
+router.get('/me', ctrlWrapper(currentUserController));
 
 export default router;
