@@ -39,31 +39,3 @@ export async function loginUser(email, password) {
     refreshTokenValidUntil: new Date(Date.now() + THIRTY_DAY),
   });
 }
-/************************ User Logout *************************/
-export async function logoutUser(sessionId) {
-  return Session.deleteOne({ _id: sessionId });
-}
-/************************ Refresh Session*************************/
-export async function refreshSession(sessionId, refreshToken) {
-  const session = await Session.findById(sessionId);
-  if (!sessionId) {
-    throw createHttpError(401, 'Session not found');
-  }
-  if (session.refreshToken !== refreshToken) {
-    throw createHttpError(401, 'Session not found');
-  }
-  const isSessionTokenExpired =
-    new Date() > new Date(session.refreshTokenValidUntil);
-  if (isSessionTokenExpired) {
-    throw createHttpError(401, 'Refresh token is expired');
-  }
-  await Session.deleteOne({ _id: session._id });
-
-  return Session.create({
-    userId: session.userId,
-    accessToken: crypto.randomBytes(30).toString('base64'),
-    refreshToken: crypto.randomBytes(30).toString('base64'),
-    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
-    refreshTokenValidUntil: new Date(Date.now() + THIRTY_DAY),
-  });
-}
