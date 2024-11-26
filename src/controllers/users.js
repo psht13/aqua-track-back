@@ -1,6 +1,5 @@
 import fs from 'node:fs/promises';
-import createHttpError from 'http-errors';
-import { env } from '../utils/env.js';
+import createHttpErrors from 'http-errors';
 import { updateUser } from '../services/users.js';
 import { uploadToCloudinary } from '../utils/upload-to-cloudinary.js';
 import { saveFileToUploadDir } from '../utils/save-file-to-upload-dir.js';
@@ -25,7 +24,7 @@ export const patchUserController = async (req, res, next) => {
     avatarUrl,
   });
   if (!result) {
-    next(createHttpError(404, 'Contact not found'));
+    next(createHttpErrors(404, 'Contact not found'));
     return;
   }
 
@@ -67,3 +66,16 @@ export async function refreshController(req, res) {
     },
   });
 }
+export const currentUserController = async (req, res) => {
+  const { user } = req;
+  if (!user) {
+    throw createHttpErrors(401, 'Unauthorized: User data is not available');
+  }
+  res.json({
+    status: 'success',
+    code: 200,
+    data: {
+      user,
+    },
+  });
+};
