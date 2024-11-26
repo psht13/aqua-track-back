@@ -14,10 +14,6 @@ properties:
     description: 'Amount of water consumed (in milliliters)'
     type: number
     example: 500
-  userId:
-    description: "Id of user that's logged water consumption"
-    type: string
-    example: '672e559aefd1ec206c1b77a8'
   curDailyDose:
     description: 'Current daily water consumption goal (in milliliters)'
     type: number
