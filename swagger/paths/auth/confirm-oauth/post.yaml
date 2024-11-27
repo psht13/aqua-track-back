@@ -1,0 +1,46 @@
+tags:
+  - Auth
+summary: 'Login/Register user with Google'
+operationId: confirmOauth
+description: 'User logs in or registers with Google OAuth code. Upon success, an access token is returned.'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - code
+        properties:
+          code:
+            description: 'Google OAuth authorization code'
+            type: string
+            example: '4/0AeanS0ZS_DiPq6VArdcVBxLjmSt3CmYz35JY8bzeHMeUvNOGhnDpu0LIP7zBgKKFVsPMKw'
+responses:
+  '200':
+    description: 'User successfully logged in or registered via Google OAuth'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Login with Google successfully!'
+            data:
+              properties:
+                accessToken:
+                  type: string
+                  example: '6ulErnx7og0KG93ok2f4hWkt898Dt6mhjILAHLiJ'
+  '400':
+    $ref: '../../../components/responses/400.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'
