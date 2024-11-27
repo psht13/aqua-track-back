@@ -1,0 +1,27 @@
+tags:
+  - Auth
+summary: "Logout"
+operationId: logoutUser
+description: "Endpoint to log out a user by clearing their session and cookies."
+security: []
+parameters:
+  - in: cookie
+    name: sessionId
+    required: false
+    schema:
+      type: string
+    description: "The session ID stored in the user's cookies."
+    example: "645a8d0f4b5c2c0012c56e7b"
+responses:
+  '204':
+    description: "Successfully logged out. No content returned."
+    headers:
+      Set-Cookie:
+        description: "Clears the cookies for sessionId and refreshToken."
+        schema:
+          type: string
+          example: "refreshToken=; Path=/; HttpOnly; Expires=Thu, 01 Jan 1970 00:00:00 GMT"
+  '400':
+    $ref: '../../../components/responses/400.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
