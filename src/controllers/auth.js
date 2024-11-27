@@ -2,9 +2,11 @@ import {
   registerUser,
   loginUser,
   refreshSession,
+  loginOrRegisterUser,
   logoutUser,
 } from '../services/auth.js';
 import { User } from '../models/user.js';
+import { generateOauthUrl, validateCode } from '../utils/google-oauth.js';
 
 /* Configures the settings for creating session cookies. */
 const setupSession = (res, session) => {
@@ -90,3 +92,38 @@ export const countController = async (req, res, next) => {
     next(error);
   }
 };
+
+export async function getOauthController(req, res) {
+  const url = generateOauthUrl();
+  res.send({
+    status: 200,
+    message: 'Successfully get Google OAuth URL',
+    data: {
+      url,
+    },
+  });
+}
+
+export async function confirmOauthController(req, res) {
+  const { code } = req.body;
+  const ticket = await validateCode(code);
+  const session = await loginOrRegisterUser({
+    email: ticket.payload.email,
+    name: ticket.payload.name,
+  });
+  res.cookie('refreshToken', session.refreshToken, {
+    httpOnly: true,
+    expires: session.refreshTokenValidUntil,
+  });
+  res.cookie('sessionId', session._id, {
+    httpOnly: true,
+    expires: session.refreshTokenValidUntil,
+  });
+  res.send({
+    status: 200,
+    message: 'Login with Google successfully!',
+    data: {
+      accessToken: session.accessToken,
+    },
+  });
+}
