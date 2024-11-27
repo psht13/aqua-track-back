@@ -1,5 +1,6 @@
 import { User } from '../models/user.js';
 
+/************************ Update User *************************/
 export const updateUser = async (userId, payload) => {
   try {
     const user = await User.findOneAndUpdate(

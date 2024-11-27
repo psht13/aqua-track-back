@@ -1,9 +1,9 @@
 import {
   registerUser,
   loginUser,
-  logoutUser,
   refreshSession,
   loginOrRegisterUser,
+  logoutUser,
 } from '../services/auth.js';
 import { User } from '../models/user.js';
 import { generateOauthUrl, validateCode } from '../utils/google-oauth.js';
