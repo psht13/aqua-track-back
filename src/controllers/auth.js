@@ -1,9 +1,4 @@
-import {
-  registerUser,
-  loginUser,
-  logoutUser,
-  refreshSession,
-} from '../services/auth.js';
+import { registerUser, loginUser } from '../services/auth.js';
 import { User } from '../models/user.js';
 
 /* Configures the settings for creating session cookies. */
@@ -40,38 +35,6 @@ export async function loginController(req, res) {
   res.status(200).json({
     status: 200,
     message: 'User successfully logged in!',
-    data: {
-      accessToken: session.accessToken,
-    },
-  });
-}
-/* Controller for user logout.  */
-export async function logoutController(req, res) {
-  const { sessionId } = req.cookies;
-  if (typeof sessionId === 'string') {
-    await logoutUser(sessionId);
-  }
-  res.clearCookie('refreshToken');
-  res.clearCookie('sessionId');
-  res.status(204).end();
-}
-/* Refresh Controller . Updates the user's refresh token by validating the existing refresh token
- * and issuing a new pair of access and refresh tokens. */
-
-export async function refreshController(req, res) {
-  const { sessionId, refreshToken } = req.cookies;
-  const session = await refreshSession(sessionId, refreshToken);
-  res.cookie('refreshToken', session.refreshToken, {
-    httpOnly: true,
-    expires: session.refreshTokenValidUntil,
-  });
-  res.cookie('sessionId', session._id, {
-    httpOnly: true,
-    expires: session.refreshTokenValidUntil,
-  });
-  res.send({
-    status: 200,
-    message: 'Successfully refreshed a session!',
     data: {
       accessToken: session.accessToken,
     },
