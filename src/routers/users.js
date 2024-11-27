@@ -7,12 +7,6 @@ import { isValidID } from '../middlewares/is-valid-id.js';
 import { upload } from '../middlewares/uploads.js';
 import {
   patchUserController,
-  logoutController,
-  refreshController,
-} from '../controllers/users.js';
-import { auth } from '../middlewares/auth.js';
-import {
-  patchUserController,
   currentUserController,
 } from '../controllers/users.js';
 
@@ -28,9 +22,6 @@ router.patch(
   validateBody(updateUserSchema),
   ctrlWrapper(patchUserController),
 );
-router.post('/logout', ctrlWrapper(logoutController));
-
-router.post('/refresh', ctrlWrapper(refreshController));
 
 router.get('/me', ctrlWrapper(currentUserController));
 

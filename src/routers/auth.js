@@ -4,6 +4,8 @@ import {
   registerController,
   loginController,
   countController,
+  logoutController,
+  refreshController,
 } from '../controllers/auth.js';
 import { validateBody } from '../middlewares/validate-body.js';
 import { registerSchema, loginSchema } from '../validation/auth.js';
@@ -23,6 +25,10 @@ router.post(
   validateBody(loginSchema),
   ctrlWrapper(loginController),
 );
+router.post('/logout', ctrlWrapper(logoutController));
+
+router.post('/refresh', ctrlWrapper(refreshController));
+
 router.get('/user-count', ctrlWrapper(countController));
 
 export default router;

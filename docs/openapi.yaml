@@ -15,6 +15,7 @@ servers:
   - url: http://127.0.0.1:8081
   - url: https://aqua-track-back.up.railway.app
 paths:
+  
   /users/{userId}:
     patch:
       $ref: ../swagger/paths/users/{userId}/patch.yaml
@@ -27,6 +28,12 @@ paths:
   /auth/login:
     post:
       $ref: ../swagger/paths/auth/login/post.yaml
+  /auth/logout:
+    post:
+      $ref: ../swagger/paths/auth/logout/post.yaml
+  /auth/refresh:
+    post:
+      $ref: ../swagger/paths/auth/refresh/post.yaml
   /auth/user-count:
     get:
       $ref: ../swagger/paths/auth/user-count/get.yaml
