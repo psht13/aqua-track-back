@@ -30,9 +30,7 @@
   "paths": {
     "/users/{userId}": {
       "patch": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Update user by id",
         "operationId": "updateUser",
         "description": "Update user by Id",
@@ -82,10 +80,7 @@
                   "gender": {
                     "description": "Specifies the gender of the user. Acceptable values are 'Woman' or 'Man'.",
                     "type": "string",
-                    "enum": [
-                      "Woman",
-                      "Man"
-                    ]
+                    "enum": ["Woman", "Man"]
                   },
                   "avatarUrl": {
                     "description": "User's photo",
@@ -104,11 +99,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -135,9 +126,7 @@
     },
     "/users/me": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Get data about the current user",
         "operationId": "getCurrentUser",
         "description": "Retrieve information about the currently authenticated user.",
@@ -153,10 +142,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "data"
-                  ],
+                  "required": ["status", "data"],
                   "properties": {
                     "status": {
                       "type": "string",
@@ -246,9 +232,7 @@
     },
     "/auth/register": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Register user",
         "operationId": "registerUser",
         "description": "Create new user",
@@ -262,10 +246,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "email",
-                  "password"
-                ],
+                "required": ["email", "password"],
                 "properties": {
                   "email": {
                     "description": "User's email",
@@ -289,11 +270,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -320,9 +297,7 @@
     },
     "/auth/login": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Login user",
         "operationId": "loginUser",
         "description": "Login user",
@@ -336,10 +311,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "email",
-                  "password"
-                ],
+                "required": ["email", "password"],
                 "properties": {
                   "email": {
                     "description": "User's email",
@@ -363,11 +335,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -398,9 +366,7 @@
     },
     "/auth/logout": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Logout",
         "operationId": "logoutUser",
         "description": "Endpoint to log out a user by clearing their session and cookies.",
@@ -445,9 +411,7 @@
     },
     "/auth/refresh": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Refresh Tokens",
         "operationId": "refreshToken",
         "description": "Endpoint to refresh the access and refresh tokens using the current refresh token.",
@@ -531,9 +495,7 @@
     },
     "/auth/user-count": {
       "get": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Get total number of registered users",
         "operationId": "getUserCount",
         "description": "Fetch the total number of registered users in the application.",
@@ -549,11 +511,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "totalUsers"
-                  ],
+                  "required": ["status", "message", "totalUsers"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -581,11 +539,128 @@
         }
       }
     },
+    "/auth/get-oauth": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get Google OAuth URL",
+        "operationId": "getOauthUrl",
+        "description": "This endpoint retrieves the Google OAuth URL, which the frontend can use to redirect the user to the Google login page.\nThe user will authenticate, and upon successful login, Google will redirect the user back to the provided `redirect_uri` with an authorization code.\n",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully fetched Google OAuth URL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "message", "data"],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully get Google OAuth URL"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": ["url"],
+                      "properties": {
+                        "url": {
+                          "type": "string",
+                          "example": "https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&response_type=code&client_id=695190086380-0rksa3tr6t9h5bq950ab9h62p6v52g5v.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A8081%2Fconfirm-oauth"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/confirm-oauth": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login/Register user with Google",
+        "operationId": "confirmOauth",
+        "description": "User logs in or registers with Google OAuth code. Upon success, an access token is returned.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["code"],
+                "properties": {
+                  "code": {
+                    "description": "Google OAuth authorization code",
+                    "type": "string",
+                    "example": "4/0AeanS0ZS_DiPq6VArdcVBxLjmSt3CmYz35JY8bzeHMeUvNOGhnDpu0LIP7zBgKKFVsPMKw"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User successfully logged in or registered via Google OAuth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "message", "data"],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Login with Google successfully!"
+                    },
+                    "data": {
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "example": "6ulErnx7og0KG93ok2f4hWkt898Dt6mhjILAHLiJ"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
     "/waters/{id}": {
       "patch": {
-        "tags": [
-          "Water"
-        ],
+        "tags": ["Water"],
         "summary": "Update a water record",
         "operationId": "updateWaterRecord",
         "description": "Update an existing water record using JSON or multipart form data.",
@@ -646,10 +721,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
+                  "required": ["status", "message"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -677,9 +749,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Water"
-        ],
+        "tags": ["Water"],
         "summary": "Delete water record by ID",
         "operationId": "deleteWaterRecord",
         "description": "Delete a water record by its unique ID",
@@ -727,9 +797,7 @@
     },
     "/waters": {
       "post": {
-        "tags": [
-          "Water"
-        ],
+        "tags": ["Water"],
         "summary": "Create a new water record",
         "operationId": "createWaterRecord",
         "description": "Creates a water record using JSON or multipart form data.",
@@ -778,10 +846,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
+                  "required": ["status", "message"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -807,9 +872,7 @@
     },
     "/waters/byDay": {
       "get": {
-        "tags": [
-          "Water"
-        ],
+        "tags": ["Water"],
         "summary": "Returns a list of water records",
         "operationId": "getWaterRecordsByDay",
         "description": "Returns a list of water records by day",
@@ -867,10 +930,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
+                  "required": ["status", "message"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -900,9 +960,7 @@
     },
     "/waters/byMonth": {
       "get": {
-        "tags": [
-          "Water"
-        ],
+        "tags": ["Water"],
         "summary": "Returns a list of water records by selected interval",
         "operationId": "getWaterRecordsByMonth",
         "description": "Returns a list of water records by day",
@@ -970,10 +1028,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
+                  "required": ["status", "message"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -1012,10 +1067,7 @@
     "schemas": {
       "user": {
         "type": "object",
-        "required": [
-          "email",
-          "password"
-        ],
+        "required": ["email", "password"],
         "properties": {
           "_id": {
             "description": "User's ID (auto-generated by the database)",
@@ -1042,10 +1094,7 @@
           "gender": {
             "description": "User's gender (optional, default is 'Woman')",
             "type": "string",
-            "enum": [
-              "Woman",
-              "Man"
-            ],
+            "enum": ["Woman", "Man"],
             "example": "Woman",
             "default": "Woman"
           },
@@ -1081,13 +1130,7 @@
       },
       "water": {
         "type": "object",
-        "required": [
-          "_id",
-          "amount",
-          "userId",
-          "curDailyDose",
-          "date"
-        ],
+        "required": ["_id", "amount", "userId", "curDailyDose", "date"],
         "properties": {
           "id": {
             "description": "Water entry's id",
@@ -1132,11 +1175,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
+              "required": ["status", "message", "data"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1163,11 +1202,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
+              "required": ["status", "message", "data"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1194,11 +1229,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
+              "required": ["status", "message", "data"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1225,11 +1256,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
+              "required": ["status", "message", "data"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1241,9 +1268,7 @@
                 },
                 "data": {
                   "type": "object",
-                  "required": [
-                    "message"
-                  ],
+                  "required": ["message"],
                   "properties": {
                     "message": {
                       "type": "string",
@@ -1262,11 +1287,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
+              "required": ["status", "message", "data"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1293,11 +1314,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
+              "required": ["status", "message", "data"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1309,9 +1326,7 @@
                 },
                 "data": {
                   "type": "object",
-                  "required": [
-                    "message"
-                  ],
+                  "required": ["message"],
                   "properties": {
                     "message": {
                       "type": "string",
