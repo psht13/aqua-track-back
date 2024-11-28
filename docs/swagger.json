@@ -404,7 +404,11 @@
         "summary": "Logout",
         "operationId": "logoutUser",
         "description": "Endpoint to log out a user by clearing their session and cookies.",
-        "security": [],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "in": "cookie",
@@ -440,82 +444,88 @@
       }
     },
     "/auth/refresh": {
-      "tags": [
-        "Auth"
-      ],
-      "summary": "Refresh Tokens",
-      "operationId": "refreshToken",
-      "description": "Endpoint to refresh the access and refresh tokens using the current refresh token.",
-      "security": [],
-      "parameters": [
-        {
-          "in": "cookie",
-          "name": "sessionId",
-          "required": true,
-          "schema": {
-            "type": "string"
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Refresh Tokens",
+        "operationId": "refreshToken",
+        "description": "Endpoint to refresh the access and refresh tokens using the current refresh token.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "cookie",
+            "name": "sessionId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The session ID stored in the user's cookies.",
+            "example": "645a8d0f4b5c2c0012c56e7b"
           },
-          "description": "The session ID stored in the user's cookies.",
-          "example": "645a8d0f4b5c2c0012c56e7b"
-        },
-        {
-          "in": "cookie",
-          "name": "refreshToken",
-          "required": true,
-          "schema": {
-            "type": "string"
-          },
-          "description": "The refresh token stored in the user's cookies.",
-          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Successfully refreshed a session!",
-          "headers": {
-            "Set-Cookie": {
-              "description": "Cookies with updated refreshToken and sessionId.",
-              "schema": {
-                "type": "string",
-                "example": "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9; Path=/; HttpOnly"
+          {
+            "in": "cookie",
+            "name": "refreshToken",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The refresh token stored in the user's cookies.",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully refreshed a session!",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Cookies with updated refreshToken and sessionId.",
+                "schema": {
+                  "type": "string",
+                  "example": "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9; Path=/; HttpOnly"
+                }
               }
-            }
-          },
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "status": {
-                    "type": "integer",
-                    "description": "HTTP status code of the response.",
-                    "example": 200
-                  },
-                  "message": {
-                    "type": "string",
-                    "description": "Success message.",
-                    "example": "Successfully refreshed a session!"
-                  },
-                  "data": {
-                    "type": "object",
-                    "properties": {
-                      "accessToken": {
-                        "type": "string",
-                        "description": "The new access token for the user.",
-                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code of the response.",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Success message.",
+                      "example": "Successfully refreshed a session!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "description": "The new access token for the user.",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+                        }
                       }
                     }
                   }
                 }
               }
             }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
           }
-        },
-        "400": {
-          "$ref": "../../../components/responses/400.yaml"
-        },
-        "401": {
-          "$ref": "../../../components/responses/401.yaml"
         }
       }
     },
@@ -1088,11 +1098,6 @@
             "description": "Amount of water consumed (in milliliters)",
             "type": "number",
             "example": 500
-          },
-          "userId": {
-            "description": "Id of user that's logged water consumption",
-            "type": "string",
-            "example": "672e559aefd1ec206c1b77a8"
           },
           "curDailyDose": {
             "description": "Current daily water consumption goal (in milliliters)",

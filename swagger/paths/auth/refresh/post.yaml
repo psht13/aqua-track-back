@@ -3,7 +3,8 @@ tags:
 summary: "Refresh Tokens"
 operationId: refreshToken
 description: "Endpoint to refresh the access and refresh tokens using the current refresh token."
-security: []
+security: 
+ - bearerAuth: []
 parameters:
   - in: cookie
     name: sessionId
