@@ -3,7 +3,8 @@ tags:
 summary: "Logout"
 operationId: logoutUser
 description: "Endpoint to log out a user by clearing their session and cookies."
-security: []
+security: 
+ - bearerAuth: []
 parameters:
   - in: cookie
     name: sessionId

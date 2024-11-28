@@ -30,9 +30,7 @@
   "paths": {
     "/users/{userId}": {
       "patch": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Update user by id",
         "operationId": "updateUser",
         "description": "Update user by Id",
@@ -82,10 +80,7 @@
                   "gender": {
                     "description": "Specifies the gender of the user. Acceptable values are 'Woman' or 'Man'.",
                     "type": "string",
-                    "enum": [
-                      "Woman",
-                      "Man"
-                    ]
+                    "enum": ["Woman", "Man"]
                   },
                   "avatarUrl": {
                     "description": "User's photo",
@@ -104,11 +99,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -135,9 +126,7 @@
     },
     "/users/me": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Get data about the current user",
         "operationId": "getCurrentUser",
         "description": "Retrieve information about the currently authenticated user.",
@@ -153,10 +142,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "data"
-                  ],
+                  "required": ["status", "data"],
                   "properties": {
                     "status": {
                       "type": "string",
@@ -246,9 +232,7 @@
     },
     "/auth/register": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Register user",
         "operationId": "registerUser",
         "description": "This endpoint allows a new user to register by providing their email and password. The system will validate the provided data and create a new user account. If the email is already taken, a conflict error (409) will be returned. The user will then be able to log in using their credentials after successful registration.",
@@ -262,10 +246,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "email",
-                  "password"
-                ],
+                "required": ["email", "password"],
                 "properties": {
                   "email": {
                     "description": "The email address associated with the user's account. Must be unique.",
@@ -289,11 +270,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -320,9 +297,7 @@
     },
     "/auth/login": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Login user",
         "operationId": "loginUser",
         "description": "  This endpoint allows a user to log in to their account using their email and password. Upon successful login, an access token is provided to authenticate further requests. If the user is not found, a 404 error will be returned.",
@@ -336,10 +311,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "email",
-                  "password"
-                ],
+                "required": ["email", "password"],
                 "properties": {
                   "email": {
                     "description": "The email address associated with the user's account.",
@@ -363,11 +335,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -398,13 +366,15 @@
     },
     "/auth/logout": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Logout",
         "operationId": "logoutUser",
         "description": "Endpoint to log out a user by clearing their session and cookies.",
-        "security": [],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "in": "cookie",
@@ -441,13 +411,15 @@
     },
     "/auth/refresh": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Refresh Tokens",
         "operationId": "refreshToken",
         "description": "Endpoint to refresh the access and refresh tokens using the current refresh token.",
-        "security": [],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "in": "cookie",
@@ -523,9 +495,7 @@
     },
     "/auth/user-count": {
       "get": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Get total number of registered users",
         "operationId": "getUserCount",
         "description": "Fetch the total number of registered users in the application.",
@@ -541,11 +511,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "totalUsers"
-                  ],
+                  "required": ["status", "message", "totalUsers"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -575,9 +541,7 @@
     },
     "/auth/get-oauth": {
       "get": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Get Google OAuth URL",
         "operationId": "getOauthUrl",
         "description": "This endpoint retrieves the Google OAuth URL, which the frontend can use to redirect the user to the Google login page.\nThe user will authenticate, and upon successful login, Google will redirect the user back to the provided `redirect_uri` with an authorization code.\n",
@@ -593,11 +557,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -609,9 +569,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "required": [
-                        "url"
-                      ],
+                      "required": ["url"],
                       "properties": {
                         "url": {
                           "type": "string",
@@ -635,9 +593,7 @@
     },
     "/auth/confirm-oauth": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Login/Register user with Google",
         "operationId": "confirmOauth",
         "description": "User logs in or registers with Google OAuth code. Upon success, an access token is returned.",
@@ -651,9 +607,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "code"
-                ],
+                "required": ["code"],
                 "properties": {
                   "code": {
                     "description": "Google OAuth authorization code",
@@ -672,11 +626,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -862,9 +812,7 @@
     },
     "/waters/{id}": {
       "patch": {
-        "tags": [
-          "Water"
-        ],
+        "tags": ["Water"],
         "summary": "Update a water record",
         "operationId": "updateWaterRecord",
         "description": "Update an existing water record using JSON or multipart form data.",
@@ -925,10 +873,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
+                  "required": ["status", "message"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -956,9 +901,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Water"
-        ],
+        "tags": ["Water"],
         "summary": "Delete water record by ID",
         "operationId": "deleteWaterRecord",
         "description": "Delete a water record by its unique ID",
@@ -1006,9 +949,7 @@
     },
     "/waters": {
       "post": {
-        "tags": [
-          "Water"
-        ],
+        "tags": ["Water"],
         "summary": "Create a new water record",
         "operationId": "createWaterRecord",
         "description": "Creates a water record using JSON or multipart form data.",
@@ -1057,10 +998,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
+                  "required": ["status", "message"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -1086,9 +1024,7 @@
     },
     "/waters/byDay": {
       "get": {
-        "tags": [
-          "Water"
-        ],
+        "tags": ["Water"],
         "summary": "Returns a list of water records",
         "operationId": "getWaterRecordsByDay",
         "description": "Returns a list of water records by day",
@@ -1146,10 +1082,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
+                  "required": ["status", "message"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -1179,9 +1112,7 @@
     },
     "/waters/byMonth": {
       "get": {
-        "tags": [
-          "Water"
-        ],
+        "tags": ["Water"],
         "summary": "Returns a list of water records by selected interval",
         "operationId": "getWaterRecordsByMonth",
         "description": "Returns a list of water records by day",
@@ -1249,10 +1180,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
+                  "required": ["status", "message"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -1291,10 +1219,7 @@
     "schemas": {
       "user": {
         "type": "object",
-        "required": [
-          "email",
-          "password"
-        ],
+        "required": ["email", "password"],
         "properties": {
           "_id": {
             "description": "User's ID (auto-generated by the database)",
@@ -1321,10 +1246,7 @@
           "gender": {
             "description": "User's gender (optional, default is 'Woman')",
             "type": "string",
-            "enum": [
-              "Woman",
-              "Man"
-            ],
+            "enum": ["Woman", "Man"],
             "example": "Woman",
             "default": "Woman"
           },
@@ -1360,13 +1282,7 @@
       },
       "water": {
         "type": "object",
-        "required": [
-          "_id",
-          "amount",
-          "userId",
-          "curDailyDose",
-          "date"
-        ],
+        "required": ["_id", "amount", "userId", "curDailyDose", "date"],
         "properties": {
           "id": {
             "description": "Water entry's id",
@@ -1411,11 +1327,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
+              "required": ["status", "message", "data"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1442,11 +1354,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
+              "required": ["status", "message", "data"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1473,11 +1381,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
+              "required": ["status", "message", "data"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1504,11 +1408,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
+              "required": ["status", "message", "data"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1520,9 +1420,7 @@
                 },
                 "data": {
                   "type": "object",
-                  "required": [
-                    "message"
-                  ],
+                  "required": ["message"],
                   "properties": {
                     "message": {
                       "type": "string",
@@ -1541,11 +1439,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
+              "required": ["status", "message", "data"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1572,11 +1466,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
+              "required": ["status", "message", "data"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1588,9 +1478,7 @@
                 },
                 "data": {
                   "type": "object",
-                  "required": [
-                    "message"
-                  ],
+                  "required": ["message"],
                   "properties": {
                     "message": {
                       "type": "string",
