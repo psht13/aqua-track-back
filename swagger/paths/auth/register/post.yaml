@@ -2,7 +2,11 @@ tags:
   - Auth
 summary: Register user
 operationId: registerUser
-description: 'Create new user'
+description:
+  'This endpoint allows a new user to register by providing their email and password.
+  The system will validate the provided data and create a new user account.
+  If the email is already taken, a conflict error (409) will be returned.
+  The user will then be able to log in using their credentials after successful registration.'
 security:
   - bearerAuth: []
 requestBody:
@@ -16,16 +20,18 @@ requestBody:
           - password
         properties:
           email:
-            description: "User's email"
+            description: "The email address associated with the user's account. Must be unique."
             type: string
             example: mail@example.com
           password:
-            description: "User's password"
+            description: "The password for the user's account. It must meet the security requirements (e.g., length, special characters)."
             type: string
             example: d3%6J-!w
 responses:
   '201':
-    description: Register user
+    description:
+      'The user has been successfully registered. A confirmation message will be returned, and
+      the new user can now log in using the provided credentials.'
     content:
       application/json:
         schema:

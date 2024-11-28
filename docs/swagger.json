@@ -251,7 +251,7 @@
         ],
         "summary": "Register user",
         "operationId": "registerUser",
-        "description": "Create new user",
+        "description": "This endpoint allows a new user to register by providing their email and password. The system will validate the provided data and create a new user account. If the email is already taken, a conflict error (409) will be returned. The user will then be able to log in using their credentials after successful registration.",
         "security": [
           {
             "bearerAuth": []
@@ -268,12 +268,12 @@
                 ],
                 "properties": {
                   "email": {
-                    "description": "User's email",
+                    "description": "The email address associated with the user's account. Must be unique.",
                     "type": "string",
                     "example": "mail@example.com"
                   },
                   "password": {
-                    "description": "User's password",
+                    "description": "The password for the user's account. It must meet the security requirements (e.g., length, special characters).",
                     "type": "string",
                     "example": "d3%6J-!w"
                   }
@@ -284,7 +284,7 @@
         },
         "responses": {
           "201": {
-            "description": "Register user",
+            "description": "The user has been successfully registered. A confirmation message will be returned, and the new user can now log in using the provided credentials.",
             "content": {
               "application/json": {
                 "schema": {
@@ -325,7 +325,7 @@
         ],
         "summary": "Login user",
         "operationId": "loginUser",
-        "description": "Login user",
+        "description": "  This endpoint allows a user to log in to their account using their email and password. Upon successful login, an access token is provided to authenticate further requests. If the user is not found, a 404 error will be returned.",
         "security": [
           {
             "bearerAuth": []
@@ -342,12 +342,12 @@
                 ],
                 "properties": {
                   "email": {
-                    "description": "User's email",
+                    "description": "The email address associated with the user's account.",
                     "type": "string",
                     "example": "mail@example.com"
                   },
                   "password": {
-                    "description": "User's password",
+                    "description": "The password for the user's account. This should be the correct password associated with the provided email.",
                     "type": "string",
                     "example": "d3%6J-!w"
                   }
@@ -358,7 +358,7 @@
         },
         "responses": {
           "200": {
-            "description": "Logged in user",
+            "description": "The user has successfully logged in. An access token is returned, which can be used for authenticating future API requests",
             "content": {
               "application/json": {
                 "schema": {
@@ -704,6 +704,158 @@
           },
           "500": {
             "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/send-reset-email": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Request a password reset email",
+        "operationId": "requestResetEmail",
+        "description": "Sends an email with a password reset link to the specified email address. If the user with the provided email does not exist, an error is returned.\n",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Provide the email address associated with the user's account. A reset link will be sent to this email.\n",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "User's registered email address",
+                    "type": "string",
+                    "example": "mail@example.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset email successfully sent to the specified email address.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Reset password email has been successfully sent."
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404u"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/reset-pwd": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Reset user password",
+        "operationId": "resetPassword",
+        "description": "This endpoint allows a user to reset their password.\nThe user must provide a new password and the reset token, which was sent to their email.\nThe password must meet the application's length requirements (8-20 characters).\n",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "To reset the password, send the new password and the secure reset token.\nThe reset token ensures that only authorized users can change their password.\n",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "password",
+                  "token"
+                ],
+                "properties": {
+                  "password": {
+                    "description": "The new password for the user.\nIt must be between 8 and 20 characters long.\n",
+                    "type": "string",
+                    "example": "mySecurePass123"
+                  },
+                  "token": {
+                    "description": "A secure token that verifies the user's identity.\nThis token is provided in the reset email sent to the user.\n",
+                    "type": "string",
+                    "example": "erJhbGciOiJIUzI1NiIsInR5cCI6IkpXVC39.eyJzdWIiOiI2NzE5NTVjr2FjNzExOTllYzFhZTNiMTEiLhJlbWFpbCI6ImFGdG9ucG9reWRrb0BnbWFpbC5jb20iLCJdYXQiOjE3Mjk4MjgxODgsImV4cCI6MTcyOTgyODQ4OH0.XJHdNVrGM4fA12SszdaXuabOXRntDNo357nt-ezaU_0"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Indicates that the password has been successfully reset.\nThe user can now log in using the new password.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Password has been successfully reset."
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404u"
           }
         }
       }
@@ -1302,7 +1454,7 @@
                 },
                 "message": {
                   "type": "string",
-                  "example": "Http Error"
+                  "example": "Unauthorized"
                 },
                 "data": {
                   "type": "object",
@@ -1432,7 +1584,7 @@
                 },
                 "message": {
                   "type": "string",
-                  "example": "NotFoundError"
+                  "example": "User not found"
                 },
                 "data": {
                   "type": "object",
