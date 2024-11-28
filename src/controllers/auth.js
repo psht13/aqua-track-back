@@ -4,6 +4,8 @@ import {
   refreshSession,
   loginOrRegisterUser,
   logoutUser,
+  requestResetPassword,
+  resetPassword,
 } from '../services/auth.js';
 import { User } from '../models/user.js';
 import { generateOauthUrl, validateCode } from '../utils/google-oauth.js';
@@ -125,5 +127,33 @@ export async function confirmOauthController(req, res) {
     data: {
       accessToken: session.accessToken,
     },
+  });
+}
+
+/* Controller for resetting the user password. Sends the password reset link to the specified email. */
+export async function resetPasswordController(req, res) {
+  const { email } = req.body;
+  if (!email) {
+    return res.status(400).json({
+      status: 400,
+      message: 'Email is required',
+    });
+  }
+  await requestResetPassword(email);
+  res.status(200).json({
+    status: 200,
+    message: 'Reset password email was successfully sent!',
+    data: {},
+  });
+}
+
+/* Controller for resetting the user password. Updates the user password. */
+export async function requestPasswordController(req, res) {
+  const { password, token } = req.body;
+  await resetPassword(password, token);
+  res.json({
+    status: 200,
+    message: 'Your password has been successfully reset.',
+    data: {},
   });
 }

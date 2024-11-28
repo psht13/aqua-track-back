@@ -2,7 +2,10 @@ tags:
   - Auth
 summary: Login user
 operationId: loginUser
-description: 'Login user'
+description:
+  '  This endpoint allows a user to log in to their account using their email and password.
+  Upon successful login, an access token is provided to authenticate further requests.
+  If the user is not found, a 404 error will be returned.'
 security:
   - bearerAuth: []
 requestBody:
@@ -15,16 +18,18 @@ requestBody:
           - password
         properties:
           email:
-            description: "User's email"
+            description: "The email address associated with the user's account."
             type: string
             example: mail@example.com
           password:
-            description: "User's password"
+            description: "The password for the user's account. This should be the correct password associated with the provided email."
             type: string
             example: d3%6J-!w
 responses:
   '200':
-    description: Logged in user
+    description:
+      'The user has successfully logged in. An access token is returned, which can be used
+      for authenticating future API requests'
     content:
       application/json:
         schema:
