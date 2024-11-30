@@ -6,7 +6,7 @@ import { saveFileToUploadDir } from '../utils/save-file-to-upload-dir.js';
 import { ENABLE_CLOUDINARY } from '../constants/index.js';
 
 export const patchUserController = async (req, res, next) => {
-  const { userId } = req.params;
+  const { id: userId } = req.user;
   const avatarFile = req.file;
   let avatarUrl;
   if (avatarFile) {
