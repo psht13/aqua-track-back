@@ -32,7 +32,7 @@ export async function registerController(req, res) {
   res.status(201).json({
     status: 201,
     message: 'User successfully registered!',
-    data: registeredUser,
+    data: { id: registeredUser._id },
   });
 }
 

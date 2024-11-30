@@ -6,8 +6,7 @@ description: |
   This endpoint allows a user to reset their password.
   The user must provide a new password and the reset token, which was sent to their email.
   The password must meet the application's length requirements (8-20 characters).
-security:
-  - bearerAuth: []
+security: []
 requestBody:
   description: |
     To reset the password, send the new password and the secure reset token.

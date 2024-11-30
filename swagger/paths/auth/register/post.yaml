@@ -2,16 +2,18 @@ tags:
   - Auth
 summary: Register user
 operationId: registerUser
-description:
-  'This endpoint allows a new user to register by providing their email and password.
+description: >
+  This endpoint allows a new user to register by providing their email and password.
   The system will validate the provided data and create a new user account.
   If the email is already taken, a conflict error (409) will be returned.
-  The user will then be able to log in using their credentials after successful registration.'
-security:
-  - bearerAuth: []
+  After successful registration, only the user ID will be returned in the response.
+security: []
 requestBody:
+  description: >
+    Provide the user's email and password to create a new account.
+    The email must be unique, and the password must meet security requirements.
+  required: true
   content:
-    # multipart/form-data: - for registration with photo
     application/json:
       schema:
         type: object
@@ -20,18 +22,20 @@ requestBody:
           - password
         properties:
           email:
-            description: "The email address associated with the user's account. Must be unique."
+            description: >
+              The email address to associate with the new user's account.
+              The email must be unique.
             type: string
             example: mail@example.com
           password:
-            description: "The password for the user's account. It must meet the security requirements (e.g., length, special characters)."
+            description: >
+              The password for the user's account. It must be between 8 and 20 characters long.
             type: string
             example: d3%6J-!w
 responses:
   '201':
-    description:
-      'The user has been successfully registered. A confirmation message will be returned, and
-      the new user can now log in using the provided credentials.'
+    description: >
+      User successfully registered. The response contains only the user's unique ID.
     content:
       application/json:
         schema:
@@ -46,9 +50,13 @@ responses:
               example: 201
             message:
               type: string
-              example: Successfully registered a user!
+              example: User successfully registered!
             data:
               type: object
-              $ref: '../../../components/schemas/user.yaml'
+              properties:
+                id:
+                  type: string
+                  description: The unique ID of the newly created user.
+                  example: 64b3f8f15e4c3e1a8a77d931
   '409':
     $ref: '../../../components/responses/409.yaml'

@@ -5,8 +5,7 @@ operationId: requestResetEmail
 description: >
   Sends an email with a password reset link to the specified email address.
   If the user with the provided email does not exist, an error is returned.
-security:
-  - bearerAuth: []
+security: []
 requestBody:
   description: >
     Provide the email address associated with the user's account. A reset link

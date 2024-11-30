@@ -22,11 +22,11 @@ properties:
     example: https://res.cloudinary.com/deoxrcsvx/image/upload/v1729857245/image.png
     default: null
   gender:
-    description: "User's gender (optional, default is 'Woman')"
+    description: "User's gender (optional, default is 'woman')"
     type: string
-    enum: ['Woman', 'Man']
-    example: Woman
-    default: Woman
+    enum: ['woman', 'man']
+    example: woman
+    default: woman
   weight:
     description: "User's weight in kg (optional, default is 0)"
     type: number

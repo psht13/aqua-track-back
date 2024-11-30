@@ -3,8 +3,7 @@ tags:
 summary: 'Login/Register user with Google'
 operationId: confirmOauth
 description: 'User logs in or registers with Google OAuth code. Upon success, an access token is returned.'
-security:
-  - bearerAuth: []
+security: []
 requestBody:
   content:
     application/json:
