@@ -1,0 +1,51 @@
+tags:
+  - Auth
+summary: Request a password reset email
+operationId: requestResetEmail
+description: >
+  Sends an email with a password reset link to the specified email address.
+  If the user with the provided email does not exist, an error is returned.
+security:
+  - bearerAuth: []
+requestBody:
+  description: >
+    Provide the email address associated with the user's account. A reset link
+    will be sent to this email.
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+        properties:
+          email:
+            description: "User's registered email address"
+            type: string
+            example: mail@example.com
+responses:
+  '200':
+    description: >
+      Password reset email successfully sent to the specified email address.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Reset password email has been successfully sent.
+            data:
+              type: object
+              example: {}
+  '404':
+    $ref: '../../../components/responses/404u.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'

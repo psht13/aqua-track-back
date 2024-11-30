@@ -13,7 +13,7 @@ content:
           example: 401
         message:
           type: string
-          example: 'Http Error'
+          example: 'Unauthorized'
         data:
           type: object
           example: { error: 'Unauthorized' }

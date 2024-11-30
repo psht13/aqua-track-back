@@ -1,4 +1,4 @@
-description: User not found error
+description: 'User not found error'
 content:
   application/json:
     schema:
@@ -13,7 +13,7 @@ content:
           example: 404
         message:
           type: string
-          example: NotFoundError
+          example: 'User not found'
         data:
           type: object
           required:

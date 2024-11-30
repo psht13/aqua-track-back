@@ -1,0 +1,62 @@
+tags:
+  - Auth
+summary: Reset user password
+operationId: resetPassword
+description: |
+  This endpoint allows a user to reset their password.
+  The user must provide a new password and the reset token, which was sent to their email.
+  The password must meet the application's length requirements (8-20 characters).
+security:
+  - bearerAuth: []
+requestBody:
+  description: |
+    To reset the password, send the new password and the secure reset token.
+    The reset token ensures that only authorized users can change their password.
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - password
+          - token
+        properties:
+          password:
+            description: |
+              The new password for the user.
+              It must be between 8 and 20 characters long.
+            type: string
+            example: mySecurePass123
+          token:
+            description: |
+              A secure token that verifies the user's identity.
+              This token is provided in the reset email sent to the user.
+            type: string
+            example: erJhbGciOiJIUzI1NiIsInR5cCI6IkpXVC39.eyJzdWIiOiI2NzE5NTVjr2FjNzExOTllYzFhZTNiMTEiLhJlbWFpbCI6ImFGdG9ucG9reWRrb0BnbWFpbC5jb20iLCJdYXQiOjE3Mjk4MjgxODgsImV4cCI6MTcyOTgyODQ4OH0.XJHdNVrGM4fA12SszdaXuabOXRntDNo357nt-ezaU_0
+responses:
+  '200':
+    description: |
+      Indicates that the password has been successfully reset.
+      The user can now log in using the new password.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Password has been successfully reset.
+            data:
+              type: object
+              example: {}
+  '404':
+    $ref: '../../../components/responses/404u.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
