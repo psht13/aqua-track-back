@@ -3,11 +3,10 @@ tags:
 summary: Login user
 operationId: loginUser
 description:
-  '  This endpoint allows a user to log in to their account using their email and password.
+  'This endpoint allows a user to log in to their account using their email and password.
   Upon successful login, an access token is provided to authenticate further requests.
   If the user is not found, a 404 error will be returned.'
-security:
-  - bearerAuth: []
+security: []
 requestBody:
   content:
     application/json:

@@ -5,8 +5,7 @@ operationId: getOauthUrl
 description: |
   This endpoint retrieves the Google OAuth URL, which the frontend can use to redirect the user to the Google login page.
   The user will authenticate, and upon successful login, Google will redirect the user back to the provided `redirect_uri` with an authorization code.
-security:
-  - bearerAuth: []
+security: []
 responses:
   '200':
     description: 'Successfully fetched Google OAuth URL'

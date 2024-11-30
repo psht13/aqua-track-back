@@ -1,17 +1,17 @@
 tags:
-- Users
+  - Users
 summary: Update user by id
 operationId: updateUser
 description: 'Update user by Id'
 security:
-- bearerAuth: []
+  - bearerAuth: []
 parameters:
-- in: path
-  name: userId
-  required: true
-  schema:
-    type: string
-    example: 67333b7e721cbb7aed8baba5
+  - in: path
+    name: userId
+    required: true
+    schema:
+      type: string
+      example: 67333b7e721cbb7aed8baba5
 requestBody:
   required: true
   content:
@@ -22,13 +22,13 @@ requestBody:
           name:
             description: "User's name"
             type: string
-            example: "John Doe"
+            example: 'John Doe'
           weight:
             description: "User's weight in kilograms."
             type: number
             example: 52
           activeTime:
-            description: "The number of minutes the user has been active today."
+            description: 'The number of minutes the user has been active today.'
             type: number
             example: 12
           dailyNorm:
@@ -36,9 +36,9 @@ requestBody:
             type: number
             example: 500
           gender:
-            description: "Specifies the gender of the user. Acceptable values are 'Woman' or 'Man'."
+            description: "Specifies the gender of the user. Acceptable values are 'woman' or 'man'."
             type: string
-            enum: [ 'Woman', 'Man' ]
+            enum: ['woman', 'man']
           avatarUrl:
             description: "User's photo"
             type: string
@@ -51,9 +51,9 @@ responses:
         schema:
           type: object
           required:
-          - status
-          - message
-          - data
+            - status
+            - message
+            - data
           properties:
             status:
               type: integer
@@ -66,4 +66,3 @@ responses:
   '404':
     description: 'User not found'
     $ref: ../../../components/responses/404.yaml
-   
