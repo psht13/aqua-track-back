@@ -57,7 +57,6 @@ export const updateWaterRecordController = async (req, res, next) => {
 export const deleteWaterRecordController = async (req, res, next) => {
   const user = req.user;
   const { id } = req.params;
-  const response = await deleteWaterRecord(id, user);
-  if (!response) throw httpErrors(404, 'This record is not found');
+  await deleteWaterRecord(id, user);
   res.status(204).send();
 };
