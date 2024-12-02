@@ -22,12 +22,12 @@ router.use(auth);
 /**
  * @method returns a list of water records filtered by a month
  */
-router.get('/byMonth', ctrlWrapper(getWaterByIntervalController));
+router.get('/month', ctrlWrapper(getWaterByIntervalController));
 
 /**
  * @method returns a list of water records filtered by a day
  */
-router.get('/byDay', ctrlWrapper(getWaterByDayController));
+router.get('/day', ctrlWrapper(getWaterByDayController));
 
 /**
  * @method creates a new water record

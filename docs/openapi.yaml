@@ -56,10 +56,10 @@ paths:
   /waters:
     post:
       $ref: ../swagger/paths/water/post.yaml
-  /waters/byDay:
+  /waters/day:
     get:
       $ref: ../swagger/paths/water/by-day/get.yaml
-  /waters/byMonth:
+  /waters/month:
     get:
       $ref: ../swagger/paths/water/by-month/get.yaml
 components:
