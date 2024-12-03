@@ -1017,7 +1017,7 @@
         }
       }
     },
-    "/waters/byDay": {
+    "/waters/day": {
       "get": {
         "tags": [
           "Water"
@@ -1110,7 +1110,7 @@
         }
       }
     },
-    "/waters/byMonth": {
+    "/waters/month": {
       "get": {
         "tags": [
           "Water"
