@@ -30,7 +30,9 @@
   "paths": {
     "/users/me": {
       "get": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Get data about the current user",
         "operationId": "getCurrentUser",
         "description": "Retrieve information about the currently authenticated user.",
@@ -46,7 +48,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "code", "data"],
+                  "required": [
+                    "status",
+                    "code",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "string",
@@ -60,63 +66,7 @@
                       "type": "object",
                       "properties": {
                         "user": {
-                          "type": "object",
-                          "required": [
-                            "_id",
-                            "name",
-                            "email",
-                            "avatarUrl",
-                            "gender",
-                            "weight",
-                            "activeTime",
-                            "dailyNorm",
-                            "createdAt",
-                            "updatedAt"
-                          ],
-                          "properties": {
-                            "_id": {
-                              "type": "string",
-                              "example": "674346608217f8bb0c28a097"
-                            },
-                            "name": {
-                              "type": "string",
-                              "example": "Лексі Rosa"
-                            },
-                            "email": {
-                              "type": "string",
-                              "example": "alex@gmail.com"
-                            },
-                            "avatarUrl": {
-                              "type": "string",
-                              "example": "https://res.cloudinary.com/dzon9bagg/image/upload/v1732558201/z2coslezrkdw3bpz9mqb.jpg"
-                            },
-                            "gender": {
-                              "type": "string",
-                              "example": "Woman"
-                            },
-                            "weight": {
-                              "type": "number",
-                              "example": 100
-                            },
-                            "activeTime": {
-                              "type": "number",
-                              "example": 60
-                            },
-                            "dailyNorm": {
-                              "type": "number",
-                              "example": 1500
-                            },
-                            "createdAt": {
-                              "type": "string",
-                              "format": "date-time",
-                              "example": "2024-11-24T15:29:36.066Z"
-                            },
-                            "updatedAt": {
-                              "type": "string",
-                              "format": "date-time",
-                              "example": "2024-11-25T20:12:55.256Z"
-                            }
-                          }
+                          "$ref": "#/components/schemas/user"
                         }
                       }
                     }
@@ -126,17 +76,18 @@
             }
           },
           "401": {
-            "description": "Unauthorized, invalid or missing token",
             "$ref": "#/components/responses/401"
           },
-          "404": {
-            "description": "User not found",
-            "$ref": "#/components/responses/404"
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       },
       "patch": {
-        "tags": ["Users"],
+        "tags": [
+          "Users",
+          "Users"
+        ],
         "summary": "Update user by id",
         "operationId": "updateUser",
         "description": "Update user profile. The user ID is extracted from the token in the authorization header.",
@@ -175,7 +126,10 @@
                   "gender": {
                     "description": "Specifies the gender of the user. Acceptable values are 'woman' or 'man'.",
                     "type": "string",
-                    "enum": ["woman", "man"]
+                    "enum": [
+                      "woman",
+                      "man"
+                    ]
                   },
                   "avatarUrl": {
                     "description": "User's photo. If not provided, the current avatar will remain unchanged.",
@@ -194,7 +148,14 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data",
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -225,7 +186,9 @@
     },
     "/auth/register": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Register user",
         "operationId": "registerUser",
         "description": "This endpoint allows a new user to register by providing their email and password. The system will validate the provided data and create a new user account. If the email is already taken, a conflict error (409) will be returned. After successful registration, only the user ID will be returned in the response.\n",
@@ -237,7 +200,10 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["email", "password"],
+                "required": [
+                  "email",
+                  "password"
+                ],
                 "properties": {
                   "email": {
                     "description": "The email address to associate with the new user's account. The email must be unique.\n",
@@ -261,7 +227,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -294,7 +264,9 @@
     },
     "/auth/login": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Login user",
         "operationId": "loginUser",
         "description": "This endpoint allows a user to log in to their account using their email and password. Upon successful login, an access token is provided to authenticate further requests. If the user is not found, a 404 error will be returned.",
@@ -304,7 +276,10 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["email", "password"],
+                "required": [
+                  "email",
+                  "password"
+                ],
                 "properties": {
                   "email": {
                     "description": "The email address associated with the user's account.",
@@ -328,7 +303,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -359,7 +338,9 @@
     },
     "/auth/logout": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Logout",
         "operationId": "logoutUser",
         "description": "Endpoint to log out a user by clearing their session and cookies.",
@@ -404,7 +385,9 @@
     },
     "/auth/refresh": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Refresh Tokens",
         "operationId": "refreshToken",
         "description": "Endpoint to refresh the access and refresh tokens using the current refresh token.",
@@ -488,7 +471,9 @@
     },
     "/auth/user-count": {
       "get": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Get total number of registered users",
         "operationId": "getUserCount",
         "description": "Fetch the total number of registered users in the application.",
@@ -500,7 +485,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "totalUsers"],
+                  "required": [
+                    "status",
+                    "message",
+                    "totalUsers"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -530,7 +519,9 @@
     },
     "/auth/get-oauth": {
       "get": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Get Google OAuth URL",
         "operationId": "getOauthUrl",
         "description": "This endpoint retrieves the Google OAuth URL, which the frontend can use to redirect the user to the Google login page.\nThe user will authenticate, and upon successful login, Google will redirect the user back to the provided `redirect_uri` with an authorization code.\n",
@@ -542,7 +533,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -554,7 +549,9 @@
                     },
                     "data": {
                       "type": "object",
-                      "required": ["url"],
+                      "required": [
+                        "url"
+                      ],
                       "properties": {
                         "url": {
                           "type": "string",
@@ -578,7 +575,9 @@
     },
     "/auth/confirm-oauth": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Login/Register user with Google",
         "operationId": "confirmOauth",
         "description": "User logs in or registers with Google OAuth code. Upon success, an access token is returned.",
@@ -588,7 +587,9 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["code"],
+                "required": [
+                  "code"
+                ],
                 "properties": {
                   "code": {
                     "description": "Google OAuth authorization code",
@@ -607,7 +608,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -641,7 +646,9 @@
     },
     "/auth/send-reset-email": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Request a password reset email",
         "operationId": "requestResetEmail",
         "description": "Sends an email with a password reset link to the specified email address. If the user with the provided email does not exist, an error is returned.\n",
@@ -653,7 +660,9 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["email"],
+                "required": [
+                  "email"
+                ],
                 "properties": {
                   "email": {
                     "description": "User's registered email address",
@@ -672,7 +681,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -702,11 +715,17 @@
     },
     "/auth/reset-pwd": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Reset user password",
         "operationId": "resetPassword",
         "description": "This endpoint allows a user to reset their password.\nThe user must provide a new password and the reset token, which was sent to their email.\nThe password must meet the application's length requirements (8-20 characters).\n",
-        "security": [],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "description": "To reset the password, send the new password and the secure reset token.\nThe reset token ensures that only authorized users can change their password.\n",
           "required": true,
@@ -714,7 +733,10 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["password", "token"],
+                "required": [
+                  "password",
+                  "token"
+                ],
                 "properties": {
                   "password": {
                     "description": "The new password for the user.\nIt must be between 8 and 20 characters long.\n",
@@ -738,7 +760,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -768,7 +794,9 @@
     },
     "/waters/{id}": {
       "patch": {
-        "tags": ["Water"],
+        "tags": [
+          "Water"
+        ],
         "summary": "Update a water record",
         "operationId": "updateWaterRecord",
         "description": "Update an existing water record using JSON or multipart form data.",
@@ -829,7 +857,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message"],
+                  "required": [
+                    "status",
+                    "message"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -857,7 +888,9 @@
         }
       },
       "delete": {
-        "tags": ["Water"],
+        "tags": [
+          "Water"
+        ],
         "summary": "Delete water record by ID",
         "operationId": "deleteWaterRecord",
         "description": "Delete a water record by its unique ID",
@@ -905,7 +938,9 @@
     },
     "/waters": {
       "post": {
-        "tags": ["Water"],
+        "tags": [
+          "Water"
+        ],
         "summary": "Create a new water record",
         "operationId": "createWaterRecord",
         "description": "Creates a water record using JSON or multipart form data.",
@@ -954,7 +989,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message"],
+                  "required": [
+                    "status",
+                    "message"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -980,7 +1018,9 @@
     },
     "/waters/day": {
       "get": {
-        "tags": ["Water"],
+        "tags": [
+          "Water"
+        ],
         "summary": "Returns a list of water records",
         "operationId": "getWaterRecordsByDay",
         "description": "Returns a list of water records by day",
@@ -1038,7 +1078,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message"],
+                  "required": [
+                    "status",
+                    "message"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -1068,7 +1111,9 @@
     },
     "/waters/month": {
       "get": {
-        "tags": ["Water"],
+        "tags": [
+          "Water"
+        ],
         "summary": "Returns a list of water records by selected interval",
         "operationId": "getWaterRecordsByMonth",
         "description": "Returns a list of water records by day",
@@ -1136,7 +1181,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message"],
+                  "required": [
+                    "status",
+                    "message"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -1172,182 +1220,13 @@
         "scheme": "bearer"
       }
     },
-    "responses": {
-      "400": {
-        "description": "Validation error",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": ["status", "message", "data"],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 400
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Http Error"
-                },
-                "data": {
-                  "type": "object",
-                  "example": {
-                    "error": "Request body validation error"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "401": {
-        "description": "Unauthorized",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": ["status", "message", "data"],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 401
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Unauthorized"
-                },
-                "data": {
-                  "type": "object",
-                  "example": {
-                    "error": "Unauthorized"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "404": {
-        "description": "Not found",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": ["status", "message", "data"],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 404
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Http Error"
-                },
-                "data": {
-                  "type": "object",
-                  "example": {
-                    "error": "Not found"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "409": {
-        "description": "User with used email already exist",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": ["status", "message", "data"],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 409
-                },
-                "message": {
-                  "type": "string",
-                  "example": "ConflictError"
-                },
-                "data": {
-                  "type": "object",
-                  "required": ["message"],
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Email in use"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "500": {
-        "description": "Internal server error",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": ["status", "message", "data"],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 500
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Something went wrong"
-                },
-                "data": {
-                  "type": "object",
-                  "example": {
-                    "error": "Internal server error"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "404u": {
-        "description": "User not found error",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": ["status", "message", "data"],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 404
-                },
-                "message": {
-                  "type": "string",
-                  "example": "User not found"
-                },
-                "data": {
-                  "type": "object",
-                  "required": ["message"],
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "User not found"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "schemas": {
       "user": {
         "type": "object",
-        "required": ["email", "password"],
+        "required": [
+          "email",
+          "password"
+        ],
         "properties": {
           "_id": {
             "description": "User's ID (auto-generated by the database)",
@@ -1372,11 +1251,14 @@
             "default": null
           },
           "gender": {
-            "description": "User's gender (optional, default is 'Woman')",
+            "description": "User's gender (optional, default is 'woman')",
             "type": "string",
-            "enum": ["Woman", "Man"],
-            "example": "Woman",
-            "default": "Woman"
+            "enum": [
+              "woman",
+              "man"
+            ],
+            "example": "woman",
+            "default": "woman"
           },
           "weight": {
             "description": "User's weight in kg (optional, default is 0)",
@@ -1410,7 +1292,13 @@
       },
       "water": {
         "type": "object",
-        "required": ["_id", "amount", "userId", "curDailyDose", "date"],
+        "required": [
+          "_id",
+          "amount",
+          "userId",
+          "curDailyDose",
+          "date"
+        ],
         "properties": {
           "id": {
             "description": "Water entry's id",
@@ -1444,6 +1332,206 @@
             "type": "string",
             "format": "date-time",
             "example": "2024-11-23T12:34:56Z"
+          }
+        }
+      }
+    },
+    "responses": {
+      "400": {
+        "description": "Validation error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Http Error"
+                },
+                "data": {
+                  "type": "object",
+                  "example": {
+                    "error": "Request body validation error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Unauthorized"
+                },
+                "data": {
+                  "type": "object",
+                  "example": {
+                    "error": "Unauthorized"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Http Error"
+                },
+                "data": {
+                  "type": "object",
+                  "example": {
+                    "error": "Not found"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "User with used email already exist",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 409
+                },
+                "message": {
+                  "type": "string",
+                  "example": "ConflictError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Email in use"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal server error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Something went wrong"
+                },
+                "data": {
+                  "type": "object",
+                  "example": {
+                    "error": "Internal server error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404u": {
+        "description": "User not found error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "User not found"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User not found"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
