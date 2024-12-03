@@ -14,6 +14,7 @@ responses:
           type: object
           required:
             - status
+            - code
             - data
           properties:
             status:
@@ -26,51 +27,7 @@ responses:
               type: object
               properties:
                 user:
-                  type: object
-                  required:
-                    - _id
-                    - name
-                    - email
-                    - avatarUrl
-                    - gender
-                    - weight
-                    - activeTime
-                    - dailyNorm
-                    - createdAt
-                    - updatedAt
-                  properties:
-                    _id:
-                      type: string
-                      example: '674346608217f8bb0c28a097'
-                    name:
-                      type: string
-                      example: 'Лексі Rosa'
-                    email:
-                      type: string
-                      example: 'alex@gmail.com'
-                    avatarUrl:
-                      type: string
-                      example: 'https://res.cloudinary.com/dzon9bagg/image/upload/v1732558201/z2coslezrkdw3bpz9mqb.jpg'
-                    gender:
-                      type: string
-                      example: 'Woman'
-                    weight:
-                      type: number
-                      example: 100
-                    activeTime:
-                      type: number
-                      example: 60
-                    dailyNorm:
-                      type: number
-                      example: 1500
-                    createdAt:
-                      type: string
-                      format: date-time
-                      example: '2024-11-24T15:29:36.066Z'
-                    updatedAt:
-                      type: string
-                      format: date-time
-                      example: '2024-11-25T20:12:55.256Z'
+                  $ref: ../../../components/schemas/user.yaml
   '401':
     $ref: '../../../components/responses/401.yaml'
   '500':

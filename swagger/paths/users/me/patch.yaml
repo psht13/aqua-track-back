@@ -1,5 +1,6 @@
 tags:
   - Users
+  - Users
 summary: Update user by id
 operationId: updateUser
 description: 'Update user profile. The user ID is extracted from the token in the authorization header.'
@@ -15,13 +16,13 @@ requestBody:
           name:
             description: "User's name"
             type: string
-            example: "John Doe"
+            example: 'John Doe'
           weight:
             description: "User's weight in kilograms."
             type: number
             example: 52
           activeTime:
-            description: "The number of minutes the user has been active today."
+            description: 'The number of minutes the user has been active today.'
             type: number
             example: 12
           dailyNorm:
@@ -30,7 +31,9 @@ requestBody:
             example: 500
           gender:
             description: "Specifies the gender of the user. Acceptable values are 'woman' or 'man'."
+            description: "Specifies the gender of the user. Acceptable values are 'woman' or 'man'."
             type: string
+            enum: ['woman', 'man']
             enum: ['woman', 'man']
           avatarUrl:
             description: "User's photo. If not provided, the current avatar will remain unchanged."
@@ -44,6 +47,9 @@ responses:
         schema:
           type: object
           required:
+            - status
+            - message
+            - data
             - status
             - message
             - data
