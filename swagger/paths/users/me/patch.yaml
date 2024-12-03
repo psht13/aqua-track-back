@@ -1,17 +1,11 @@
 tags:
   - Users
+  - Users
 summary: Update user by id
 operationId: updateUser
-description: 'Update user by Id'
+description: 'Update user profile. The user ID is extracted from the token in the authorization header.'
 security:
   - bearerAuth: []
-parameters:
-  - in: path
-    name: userId
-    required: true
-    schema:
-      type: string
-      example: 67333b7e721cbb7aed8baba5
 requestBody:
   required: true
   content:
@@ -37,20 +31,25 @@ requestBody:
             example: 500
           gender:
             description: "Specifies the gender of the user. Acceptable values are 'woman' or 'man'."
+            description: "Specifies the gender of the user. Acceptable values are 'woman' or 'man'."
             type: string
             enum: ['woman', 'man']
+            enum: ['woman', 'man']
           avatarUrl:
-            description: "User's photo"
+            description: "User's photo. If not provided, the current avatar will remain unchanged."
             type: string
             format: binary
 responses:
   '200':
-    description: 'Update contact by id'
+    description: 'Successfully updated user profile'
     content:
       application/json:
         schema:
           type: object
           required:
+            - status
+            - message
+            - data
             - status
             - message
             - data
@@ -60,9 +59,12 @@ responses:
               example: 200
             message:
               type: string
-              example: 'Successfully patched a contact'
+              example: 'Successfully updated user profile'
             data:
               $ref: ../../../components/schemas/user.yaml
+  '401':
+    description: 'Unauthorized, invalid or missing token'
+    $ref: ../../../components/responses/401.yaml
   '404':
     description: 'User not found'
     $ref: ../../../components/responses/404.yaml

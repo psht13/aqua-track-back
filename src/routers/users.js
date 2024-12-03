@@ -14,7 +14,7 @@ const router = Router();
 const jsonParser = express.json();
 
 router.patch(
-  '/',
+  '/me',
   upload.single('avatarUrl'),
   jsonParser,
   validateBody(updateUserSchema),
