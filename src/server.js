@@ -16,7 +16,7 @@ const jsonParser = express.json();
 
 export const setupServer = () => {
   const app = express();
-  app.use(cors());
+  app.use(cors({ credentials: true}));
 
   app.use(cookieParser());
   app.use(jsonParser);
