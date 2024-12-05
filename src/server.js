@@ -20,7 +20,7 @@ export const setupServer = () => {
     origin: 'https://aqua-track-front.up.railway.app',
     credentials: true,
   };
-  app.use(cors(corsOptions));
+  // app.use(cors(corsOptions));
 
   app.use(cookieParser());
   app.use(jsonParser);
