@@ -16,7 +16,11 @@ const jsonParser = express.json();
 
 export const setupServer = () => {
   const app = express();
-  app.use(cors({ credentials: true}));
+  const corsOptions = {
+    origin: 'https://aqua-track-front.up.railway.app',
+    credentials: true,
+  };
+  app.use(cors(corsOptions));
 
   app.use(cookieParser());
   app.use(jsonParser);
