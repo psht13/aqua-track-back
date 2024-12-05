@@ -16,11 +16,24 @@ const jsonParser = express.json();
 
 export const setupServer = () => {
   const app = express();
-  const corsOptions = {
-    origin: 'https://aqua-track-front.up.railway.app',
-    credentials: true,
-  };
-  app.use(cors(corsOptions));
+
+  const allowedOrigins = [
+    "http://localhost:5173",
+    "https://aqua-track-front.up.railway.app",
+  ];
+
+  app.use(
+    cors({
+      origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error("Not allowed by CORS"));
+        }
+      },
+      credentials: true,
+    })
+  );
 
   app.use(cookieParser());
   app.use(jsonParser);
